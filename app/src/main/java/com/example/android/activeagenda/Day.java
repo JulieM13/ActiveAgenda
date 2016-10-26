@@ -8,8 +8,8 @@ import java.util.Date;
 
 public class Day {
 
-    private Task task;
-    private Date date;
+    public Task task;
+    public Date date;
 
     public Day(Date date, Task task) {
         this.task = task;

@@ -7,15 +7,17 @@ import java.util.Date;
  */
 
 public class Task {
-    private String taskName;
-    private Date dueDate;
-    private TaskTag tag;
-    private String description;
+    public String name;
+    public Date dueDate;
+    public TaskTag tag;
+    public String description;
+    public boolean isCompleted;
 
-    public Task(String name, Date dueDate, TaskTag tag, String description) {
-        this.taskName = name;
+    public Task(String name, Date dueDate, TaskTag tag, String description, boolean completed) {
+        this.name = name;
         this.dueDate = dueDate;
         this.tag = tag;
         this.description = (description == null) ? "" : description;
+        this.isCompleted = completed;
     }
 }
