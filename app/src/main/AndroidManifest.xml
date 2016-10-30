@@ -19,9 +19,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DayView"
+            android:name=".DayViewActivity"
             android:label="@string/title_activity_day_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".NewTaskActivity"></activity>
     </application>
 
 </manifest>

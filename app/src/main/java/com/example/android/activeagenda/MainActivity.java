@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = new Intent(this, DayView.class);
+        Intent intent = new Intent(this, NewTaskActivity.class);
         startActivity(intent);
 
     }

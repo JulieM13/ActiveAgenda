@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class DayView extends AppCompatActivity {
+public class DayViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
