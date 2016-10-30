@@ -12,11 +12,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // TODO: changing this so I can see the layout, was main_activity.xml
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = new Intent(this, NewTaskActivity.class);
+        Intent intent = new Intent(this, DayViewActivity.class); // TODO: change this to whatever our default view is
         startActivity(intent);
 
     }

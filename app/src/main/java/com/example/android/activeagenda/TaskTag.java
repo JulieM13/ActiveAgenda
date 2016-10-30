@@ -15,5 +15,6 @@ public class TaskTag {
         this.name = name;
         this.color = color;
 //        this.tasks = (tasks == null) ? new ArrayList<Task>() : tasks;
+
     }
 }

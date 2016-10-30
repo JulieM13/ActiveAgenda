@@ -1,9 +1,13 @@
 package com.example.android.activeagenda;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +25,7 @@ public class DayViewActivity extends AppCompatActivity {
 
         // TODO: get actual date from previous activity
         TextView dateTV = (TextView) findViewById(R.id.day_view_date_tv);
-        String curDate = DateFormat.getDateInstance().format(new Date());
+        final String curDate = DateFormat.getDateInstance().format(new Date());
         dateTV.setText(curDate);
 
         // TODO: get actual set of tasks from this date
@@ -34,6 +38,31 @@ public class DayViewActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
         listView.setAdapter(adapter);
 
+
+        FloatingActionButton createNewTaskBtn = (FloatingActionButton) findViewById(R.id.day_view_new_task_fab);
+        createNewTaskBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), NewTaskActivity.class);
+                intent.putExtra("DATE", curDate);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+        // TODO: Create onClick() for decrease data and increase data buttons
+
+    }
+
+    @Override
+    // We come back from the create new task dialog
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                TaskTag newTask = (TaskTag) data.getSerializableExtra("TASK");
+                /* TODO: add the newly crated task to the current list of tasks, notift the
+                array adapter the data has changed, and make sure the new task shows up */
+            }
+        }
 
     }
 
