@@ -77,6 +77,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* TODO: Get a task based off an id */
     public Task getTask(long id) {
+        //join with tags table to also return tag info
         return null;
     }
 
@@ -99,7 +100,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteTask(Task task) {
         long id = task.id;
-        db.delete(TAGS_TABLE_NAME, ID_COL + " = " + id, null);
+        db.delete(TASKS_TABLE_NAME, ID_COL + " = " + id, null);
         System.out.println("Deleted a Task! ID: " + id);
     }
 
