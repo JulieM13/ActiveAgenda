@@ -10,16 +10,16 @@ public class Task {
     public String dueDate;
     public String description;
     public int isCompleted;
-    public long tagId;
+    public TaskTag tag;
 
 
-    public Task(long id, String name, String dueDate, String description, int isCompleted, long tagId) {
+    public Task(long id, String name, String dueDate, String description, int isCompleted, TaskTag tag) {
         this.id = id;
         this.name = name;
         this.dueDate = dueDate;
         this.description = (description == null) ? "" : description;
         this.isCompleted = isCompleted;
-        this.tagId = tagId;
+        this.tag = tag;
     }
 
     // TODO: Add getters and setters for each attribute?

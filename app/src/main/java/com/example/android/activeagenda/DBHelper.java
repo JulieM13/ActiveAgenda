@@ -6,7 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME="DB";
@@ -71,6 +75,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // TODO: Add dbHelper.close() somewhere???
 
+    /* TODO: Get a task based off an id */
+    public Task getTask(long id) {
+        return null;
+    }
+
     public Task addTask(long id, String name, String dueDate, String description, int isCompleted, long tagId) {
         ContentValues values = new ContentValues();
         values.put(TASKS_TITLE_COL, name);
@@ -84,7 +93,37 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         Task newTask = cursorToTask(cursor);
         cursor.close();
+        System.out.println("Added a new Task! ID: " + id + ", Name: " + name);
         return newTask;
+    }
+
+    public void deleteTask(Task task) {
+        long id = task.id;
+        db.delete(TAGS_TABLE_NAME, ID_COL + " = " + id, null);
+        System.out.println("Deleted a Task! ID: " + id);
+    }
+
+    public List<Task> getAllTasks() {
+        List<Task> allTasks = new ArrayList<>();
+        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Task task = cursorToTask(cursor);
+            allTasks.add(task);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return allTasks;
+    }
+
+    /* TODO: Get all tasks related to a date */
+    public List<Task> getAllTasks(String date) {
+        return null;
+    }
+
+    /* TODO: Get all tasks related to a tag */
+    public List<Task> getAllTasks(TaskTag tag) {
+        return null;
     }
 
     private Task cursorToTask(Cursor cursor) {
@@ -94,12 +133,39 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(2),    // date
                 cursor.getString(3),    // description
                 cursor.getInt(4),       // completed
-                cursor.getLong(5));     // tagId
+                getTag(cursor.getLong(5)));     // tag
         return task;
     }
 
 
+    /* TODO: Get a tag based off an id */
+    public TaskTag getTag(long id) {
+        return null;
+    }
 
+    /* TODO*/
+    public TaskTag addTag(long id, String name, Color color) {
+        return null;
+    }
 
+    /* TODO*/
+    public void deleteTag(TaskTag tag) {
+
+    }
+
+    /* TODO*/
+    public List<TaskTag> getAllTags() {
+        return null;
+    }
+
+    /* TODO*/
+    public List<TaskTag> getAllTags(Color color) {
+        return null;
+    }
+
+    /* TODO*/
+    private TaskTag cursorToTaskTag(Cursor cursor) {
+        return null;
+    }
 
 }
