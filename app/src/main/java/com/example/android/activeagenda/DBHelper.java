@@ -7,9 +7,18 @@ import android.database.sqlite.SQLiteDatabase;
 import java.io.FileNotFoundException;
 
 public class DBHelper {
-    private static final String DB_TABLES="create table tasks(_id integer primary key autoincrement, title text not null, description text, tagId integer not null, date text not null);" +
-            "create table tags(_id integer primary key autoincrement, name text not null, color text not null";
+    private static final String DB_TABLES=
+            "create table tags(_id INTEGER PRIMARY KEY NOT NULL, " +
+            "name TEXT NOT NULL, " +
+            "color TEXT NOT NULL);"+
+            "create table tasks(_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+            "title TEXT NOT NULL, description TEXT," +
+            " tagId INTEGER NOT NULL, " +
+            "date TEXT NOT NULL, " +
+            "deleted INTEGER NOT NULL" +
+            "FOREIGN KEY(tagId) REFERENCES tags(_id)\n" +
+            "););";
     private static final String DBNAME="DB";
     private SQLiteDatabase db;
-    
+
 }
