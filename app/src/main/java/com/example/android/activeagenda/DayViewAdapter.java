@@ -45,7 +45,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         }
 
         Task curTask = allTasks[position];
-        holder.checkBox.setChecked(curTask.isCompleted);
+        holder.checkBox.setChecked(curTask.isCompleted == 1 ? true : false);
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);
 

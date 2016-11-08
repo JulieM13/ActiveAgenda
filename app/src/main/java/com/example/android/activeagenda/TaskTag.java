@@ -7,14 +7,15 @@ import android.graphics.Color;
  */
 
 public class TaskTag {
+    public long id;
     public String name;
     public Color color;
-//    public ArrayList<Task> tasks;
 
-    public TaskTag(String name, Color color/*, ArrayList<Task> tasks*/) {
+    public TaskTag(long id, String name, Color color) {
+        this.id = id;
         this.name = name;
         this.color = color;
-//        this.tasks = (tasks == null) ? new ArrayList<Task>() : tasks;
-
     }
+
+    // TODO: Add getters and setters for each attribute
 }
