@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by Julie on 10/26/2016.
  */
@@ -16,9 +18,9 @@ import android.widget.TextView;
 public class DayViewAdapter extends ArrayAdapter<Task> {
     Context context;
     int layoutResourceId;
-    Task[] allTasks;
+    List<Task> allTasks;
 
-    public DayViewAdapter(Context context, int layoutResourceId, Task[] data) {
+    public DayViewAdapter(Context context, int layoutResourceId, List<Task> data) {
         super(context, layoutResourceId, data);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
@@ -44,7 +46,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
             holder = (TaskHolder)row.getTag();
         }
 
-        Task curTask = allTasks[position];
+        Task curTask = allTasks.get(position);
         holder.checkBox.setChecked(curTask.isCompleted == 1 ? true : false);
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);

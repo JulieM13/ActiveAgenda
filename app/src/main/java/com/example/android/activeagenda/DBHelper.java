@@ -5,14 +5,22 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.util.Log;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
+    private final Context context;
+    private static String DB_PATH;
+
     private static final String DB_NAME="DB";
     private static final String ID_COL = "_id";
     private static final int DB_VERSION = 1;
@@ -56,22 +64,72 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper (Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context = context;
+        DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+
+        try {
+            createDatabase();
+        } catch (IOException e) {
+            Log.e("DB", "Fail to create database");
+        }
+        db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate (SQLiteDatabase database) {
         database.execSQL(DB_TABLES);
-        db = this.getWritableDatabase();
     }
 
     @Override
-    public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(DBHelper.class.getName(),
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + DB_NAME);
-        onCreate(db);
+    public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) { }
+
+    // Coped from Flipped 4
+    private void copyDatabase() throws IOException {
+        InputStream input = context.getAssets().open(DB_NAME);
+        String outFileName = DB_PATH + DB_NAME;
+        OutputStream output = new FileOutputStream(outFileName);
+
+        byte[] buf = new byte[4096];
+        int len;
+        while ((len = input.read(buf)) > 0) {
+            output.write(buf, 0, len);
+        }
+        output.flush();
+        output.close();
+        input.close();
     }
+
+    private boolean checkDatabase() {
+        SQLiteDatabase checkDB = null;
+        boolean exist = false;
+        try {
+            String path = DB_PATH + DB_NAME;
+            checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+        } catch (SQLiteException e) {
+            Log.e("DB", "Database doesn't exist");
+        }
+
+        if (checkDB != null) {
+            checkDB.close();
+            exist = true;
+        }
+        return exist;
+    }
+
+    public void createDatabase() throws IOException {
+        boolean exist = checkDatabase();
+
+        if (!exist) {
+            this.getReadableDatabase();
+            this.close();
+            try {
+                copyDatabase();
+            } catch (IOException e) {
+                throw new IOException("Fail to copy database");
+            }
+        }
+    }
+    // End of copied from Flipped 4
 
     // TODO: Add dbHelper.close() somewhere???
 

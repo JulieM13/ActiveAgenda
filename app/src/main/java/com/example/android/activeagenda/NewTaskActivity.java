@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -33,10 +34,14 @@ public class NewTaskActivity extends AppCompatActivity {
                 Spinner tagSpinner = (Spinner) findViewById(R.id.new_task_tag_spinner);
                 DatePicker datePicker = (DatePicker) findViewById(R.id.new_task_datepicker);
 
-                // TODO: add error checking - require all but descritpion?
+                // TODO: add error checking - require all but descritpion and tag?
                 String taskName = taskNameET.getText().toString();
+                if (taskName == null || taskName == "") {
+                    Toast.makeText(getApplicationContext(), "Please enter a task name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String taskDescription = taskDescriptionET.getText().toString();
-                String TagName = tagSpinner.getSelectedItem().toString();
+                String tagName = tagSpinner.getSelectedItem().toString();
                 int day = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth() + 1;
                 int year = datePicker.getYear();
