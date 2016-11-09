@@ -47,12 +47,13 @@ public class DBHelper extends SQLiteOpenHelper {
             TASKS_COMPLETED_COL
         };
 
-    private static final String DB_TABLES=
-            "CREATE TABLE " + TAGS_TABLE_NAME +
+    private static final String DB_TAGS=
+            "CREATE TABLE IF NOT EXISTS " + TAGS_TABLE_NAME +
                     "(" + ID_COL + " INTEGER PRIMARY KEY NOT NULL, " +
                     TAGS_NAME_COL + " TEXT NOT NULL, " +
-                    TAGS_COLOR_COL + " TEXT NOT NULL);"+
-            "CREATE TABLE " + TASKS_TABLE_NAME +
+                    TAGS_COLOR_COL + " TEXT NOT NULL);";
+    private static final String DB_TASKS=
+            "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE_NAME +
                     "(" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     TASKS_TITLE_COL + " TEXT NOT NULL, " +
                     TASKS_DESCRIPTION_COL + " TEXT, " +
@@ -60,76 +61,73 @@ public class DBHelper extends SQLiteOpenHelper {
                     TASKS_DATE_COL + " TEXT NOT NULL, " +
                     TASKS_COMPLETED_COL + " INTEGER NOT NULL, " +
                     "FOREIGN KEY(tagId) REFERENCES tags(_id)\n" +
-            "););";
+            ");";
 
     public DBHelper (Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
-        DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
-
-        try {
-            createDatabase();
-        } catch (IOException e) {
-            Log.e("DB", "Fail to create database");
-        }
+        //DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
         db = this.getWritableDatabase();
+        db.execSQL(DB_TAGS);
+        db.execSQL(DB_TASKS);
+
     }
 
     @Override
     public void onCreate (SQLiteDatabase database) {
-        database.execSQL(DB_TABLES);
+
     }
 
     @Override
     public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) { }
 
-    // Coped from Flipped 4
-    private void copyDatabase() throws IOException {
-        InputStream input = context.getAssets().open(DB_NAME);
-        String outFileName = DB_PATH + DB_NAME;
-        OutputStream output = new FileOutputStream(outFileName);
-
-        byte[] buf = new byte[4096];
-        int len;
-        while ((len = input.read(buf)) > 0) {
-            output.write(buf, 0, len);
-        }
-        output.flush();
-        output.close();
-        input.close();
-    }
-
-    private boolean checkDatabase() {
-        SQLiteDatabase checkDB = null;
-        boolean exist = false;
-        try {
-            String path = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
-        } catch (SQLiteException e) {
-            Log.e("DB", "Database doesn't exist");
-        }
-
-        if (checkDB != null) {
-            checkDB.close();
-            exist = true;
-        }
-        return exist;
-    }
-
-    public void createDatabase() throws IOException {
-        boolean exist = checkDatabase();
-
-        if (!exist) {
-            this.getReadableDatabase();
-            this.close();
-            try {
-                copyDatabase();
-            } catch (IOException e) {
-                throw new IOException("Fail to copy database");
-            }
-        }
-    }
-    // End of copied from Flipped 4
+//    // Coped from Flipped 4
+//    private void copyDatabase() throws IOException {
+//        InputStream input = context.getAssets().open(DB_NAME);
+//        String outFileName = DB_PATH + DB_NAME;
+//        OutputStream output = new FileOutputStream(outFileName);
+//
+//        byte[] buf = new byte[4096];
+//        int len;
+//        while ((len = input.read(buf)) > 0) {
+//            output.write(buf, 0, len);
+//        }
+//        output.flush();
+//        output.close();
+//        input.close();
+//    }
+//
+//    private boolean checkDatabase() {
+//        SQLiteDatabase checkDB = null;
+//        boolean exist = false;
+//        try {
+//            String path = DB_PATH + DB_NAME;
+//            checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+//        } catch (SQLiteException e) {
+//            Log.e("DB", "Database doesn't exist");
+//        }
+//
+//        if (checkDB != null) {
+//            checkDB.close();
+//            exist = true;
+//        }
+//        return exist;
+//    }
+//
+//    public void createDatabase() throws IOException {
+//        boolean exist = checkDatabase();
+//
+//        if (!exist) {
+//            this.getReadableDatabase();
+//            this.close();
+//            try {
+//                copyDatabase();
+//            } catch (IOException e) {
+//                throw new IOException("Fail to copy database");
+//            }
+//        }
+//    }
+//    // End of copied from Flipped 4
 
     // TODO: Add dbHelper.close() somewhere???
 
