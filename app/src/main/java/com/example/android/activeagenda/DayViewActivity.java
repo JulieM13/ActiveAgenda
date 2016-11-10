@@ -35,15 +35,19 @@ public class DayViewActivity extends AppCompatActivity {
         // TODO: get actual date from previous activity
         TextView dateTV = (TextView) findViewById(R.id.day_view_date_tv);
         curDate = new Date();
-        dateTV.setText(DateFormat.getDateInstance().format(curDate)); // HEY RACHAEL this sets the current date to "Nov 0, 2016". The comma leads to problems in the sql statement, hence why I want to format it
+        dateTV.setText(DateFormat.getDateInstance().format(curDate));
 
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd"); //HEY RACHAEL worked on formatting the date some more here, but I'm not sure that it works
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         curDateString = formatter.format(curDate);
 
 
         // TODO: get actual set of tasks from this date - check that this works
-        System.out.println("The current date is: " + curDateString); // HEY RACHAEL another debug string
+        System.out.println("The current date is: " + curDateString);
         allTasks = dbHelper.getAllTasks(curDateString);
+        System.out.println(allTasks.size());
+        for(Task task : allTasks){
+            System.out.println("Task: " + task.name);
+        }
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
         listView.setAdapter(adapter);

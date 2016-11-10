@@ -51,7 +51,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 String taskDescription = taskDescriptionET.getText().toString();
                 int day = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth() + 1;
-                int year = datePicker.getYear();
+                int year = datePicker.getYear() - 1900; //apparently this is a thing http://stackoverflow.com/questions/17985467/datepicker-dialog-picks-wrong-year
                 Date date = new Date(year, month, day);
                 System.out.println("year: " + year + " month: " + month + " day: " + day); // HEY RACHAEL for today: year: 2016 month: 11 day: 9
                 Format formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -59,8 +59,6 @@ public class NewTaskActivity extends AppCompatActivity {
 
                 // TODO: actually get tagId
                 int tagId = NO_TAG_SELECTED;
-
-                System.out.println("Date being sent to DBHelper.addTask(): " + stringDate); // HEY RACHAEL value printed to console: 3916-12-09 -> date formatter is wrong?
                 dbHelper.addTask(taskName, stringDate, taskDescription, 0, tagId);
 
                 Intent returnIntent = new Intent();
