@@ -1,5 +1,6 @@
 package com.example.android.activeagenda;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -29,8 +30,11 @@ public class ManageTagsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("Create new tag fab clicked");
+                Intent intent = new Intent(getApplicationContext(), NewTagActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
+
 
         // TODO: actually get all the tags in the DB
 //        allTags = dbHelper.getAllTags();
@@ -41,6 +45,8 @@ public class ManageTagsActivity extends AppCompatActivity {
         adapter = new ManageTagsAdapter(this, R.layout.manage_tags_item, allTags);
         ListView listView = (ListView) findViewById(R.id.manage_tags_lv);
         listView.setAdapter(adapter);
+
+
 
     }
 
