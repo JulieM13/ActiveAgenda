@@ -47,11 +47,21 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         }
 
         Task curTask = allTasks.get(position);
-        holder.checkBox.setChecked(curTask.isCompleted == 1 ? true : false);
+        holder.checkBox.setChecked(curTask.isCompleted);
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);
 
         return row;
+    }
+
+    @Override
+    public int getCount() {
+        return allTasks.size();
+    }
+
+    @Override
+    public Task getItem(int pos) {
+        return allTasks.get(pos);
     }
 
     static class TaskHolder {

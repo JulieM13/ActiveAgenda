@@ -5,15 +5,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.util.Log;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,10 +35,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TASKS_COMPLETED_COL = "completed";
     private static final String[] ALL_TASKS_COLS = {
             TASKS_TITLE_COL,
-            TASKS_DESCRIPTION_COL,
-            TASKS_TAGID_COL,
             TASKS_DATE_COL,
-            TASKS_COMPLETED_COL
+            TASKS_DESCRIPTION_COL,
+            TASKS_COMPLETED_COL,
+            TASKS_TAGID_COL
         };
 
     private static final String DB_TAGS=
@@ -66,68 +60,18 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper (Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
-        //DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
+
         db = this.getWritableDatabase();
         db.execSQL(DB_TAGS);
         db.execSQL(DB_TASKS);
-
     }
 
     @Override
-    public void onCreate (SQLiteDatabase database) {
-
-    }
+    public void onCreate (SQLiteDatabase database) { }
 
     @Override
     public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) { }
 
-//    // Coped from Flipped 4
-//    private void copyDatabase() throws IOException {
-//        InputStream input = context.getAssets().open(DB_NAME);
-//        String outFileName = DB_PATH + DB_NAME;
-//        OutputStream output = new FileOutputStream(outFileName);
-//
-//        byte[] buf = new byte[4096];
-//        int len;
-//        while ((len = input.read(buf)) > 0) {
-//            output.write(buf, 0, len);
-//        }
-//        output.flush();
-//        output.close();
-//        input.close();
-//    }
-//
-//    private boolean checkDatabase() {
-//        SQLiteDatabase checkDB = null;
-//        boolean exist = false;
-//        try {
-//            String path = DB_PATH + DB_NAME;
-//            checkDB = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
-//        } catch (SQLiteException e) {
-//            Log.e("DB", "Database doesn't exist");
-//        }
-//
-//        if (checkDB != null) {
-//            checkDB.close();
-//            exist = true;
-//        }
-//        return exist;
-//    }
-//
-//    public void createDatabase() throws IOException {
-//        boolean exist = checkDatabase();
-//
-//        if (!exist) {
-//            this.getReadableDatabase();
-//            this.close();
-//            try {
-//                copyDatabase();
-//            } catch (IOException e) {
-//                throw new IOException("Fail to copy database");
-//            }
-//        }
-//    }
-//    // End of copied from Flipped 4
 
     // TODO: Add dbHelper.close() somewhere???
 
@@ -137,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public Task addTask(long id, String name, String dueDate, String description, int isCompleted, long tagId) {
+    public Task addTask(String name, String dueDate, String description, int isCompleted, long tagId) {
         ContentValues values = new ContentValues();
         values.put(TASKS_TITLE_COL, name);
         values.put(TASKS_DATE_COL, dueDate);
@@ -150,7 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         Task newTask = cursorToTask(cursor);
         cursor.close();
-        System.out.println("Added a new Task! ID: " + id + ", Name: " + name);
+        System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name);
         return newTask;
     }
 
@@ -184,13 +128,13 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private Task cursorToTask(Cursor cursor) {
-        Task task = new Task(      // id
-                cursor.getString(1),    // name
-                cursor.getString(2),    // date
-                cursor.getString(3),    // description
-                (cursor.getInt(4) != 0),       // completed
-                getTag(cursor.getLong(5)));     // tag
-        task.setId(cursor.getLong(0));
+        System.out.println("Cursor values: " + cursor.getString(0) + ", " + cursor.getString(1) + ", " +cursor.getString(2) + ", " +cursor.getInt(3) + "," + cursor.getLong(4));
+        Task task = new Task(
+                cursor.getString(0),        // name
+                cursor.getString(1),        // date
+                cursor.getString(2),        // description
+                (cursor.getInt(3) != 0),    // completed
+                getTag(cursor.getLong(4))); // tagId
         return task;
     }
 

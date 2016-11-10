@@ -15,7 +15,9 @@ import java.util.Date;
 import java.util.List;
 
 public class DayViewActivity extends AppCompatActivity {
-    DBHelper dbHelper;
+    private DBHelper dbHelper;
+    private List<Task> allTasks;
+    private DayViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,8 @@ public class DayViewActivity extends AppCompatActivity {
         dateTV.setText(curDate);
 
         // TODO: get actual set of tasks from this date - check that this works
-        List<Task> allTasks = dbHelper.getAllTasks();
-        DayViewAdapter adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
+        allTasks = dbHelper.getAllTasks();
+        adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
         listView.setAdapter(adapter);
 
@@ -54,11 +56,15 @@ public class DayViewActivity extends AppCompatActivity {
     @Override
     // We come back from the create new task dialog
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("In onActivityResult");
         if (requestCode == 1) {
+            System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
-                TaskTag newTask = (TaskTag) data.getSerializableExtra("TASK");
-                /* TODO: add the newly crated task to the current list of tasks, notift the
-                array adapter the data has changed, and make sure the new task shows up */
+                System.out.println("resultCode is OK");
+                allTasks = dbHelper.getAllTasks();
+                adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
+                ListView listView = (ListView) findViewById(R.id.day_view_lv);
+                listView.setAdapter(adapter);
             }
         }
 
