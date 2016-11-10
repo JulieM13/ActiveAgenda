@@ -7,10 +7,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +21,8 @@ public class DayViewActivity extends AppCompatActivity {
     private DBHelper dbHelper;
     private List<Task> allTasks;
     private DayViewAdapter adapter;
+    private Date curDate;
+    private String curDateString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +34,16 @@ public class DayViewActivity extends AppCompatActivity {
 
         // TODO: get actual date from previous activity
         TextView dateTV = (TextView) findViewById(R.id.day_view_date_tv);
-        final String curDate = DateFormat.getDateInstance().format(new Date());
-        dateTV.setText(curDate);
+        curDate = new Date();
+        dateTV.setText(DateFormat.getDateInstance().format(curDate)); // HEY RACHAEL this sets the current date to "Nov 0, 2016". The comma leads to problems in the sql statement, hence why I want to format it
+
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd"); //HEY RACHAEL worked on formatting the date some more here, but I'm not sure that it works
+        curDateString = formatter.format(curDate);
+
 
         // TODO: get actual set of tasks from this date - check that this works
-        allTasks = dbHelper.getAllTasks();
+        System.out.println("The current date is: " + curDateString); // HEY RACHAEL another debug string
+        allTasks = dbHelper.getAllTasks(curDateString);
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
         listView.setAdapter(adapter);
@@ -49,6 +59,24 @@ public class DayViewActivity extends AppCompatActivity {
             }
         });
 
+        // For testing purposes, button to delete all tasks
+        Button deleteAllTasksBtn = (Button) findViewById(R.id.day_view_delete_all_tasks_btn);
+        deleteAllTasksBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Deleting all Tasks from DB!");
+                dbHelper.deleteAllTasksFromDB();
+
+                allTasks = dbHelper.getAllTasks();
+                adapter = new DayViewAdapter(getApplicationContext(), R.layout.day_view_item, allTasks);
+                ListView listView = (ListView) findViewById(R.id.day_view_lv);
+                listView.setAdapter(adapter);
+            }
+        });
+
+
+
+
         // TODO: Create onClick() for decrease data and increase data buttons
 
     }
@@ -61,7 +89,7 @@ public class DayViewActivity extends AppCompatActivity {
             System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("resultCode is OK");
-                allTasks = dbHelper.getAllTasks();
+                allTasks = dbHelper.getAllTasks(curDateString);
                 adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
                 ListView listView = (ListView) findViewById(R.id.day_view_lv);
                 listView.setAdapter(adapter);

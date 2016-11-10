@@ -2,7 +2,6 @@ package com.example.android.activeagenda;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +11,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class NewTaskActivity extends AppCompatActivity {
 
@@ -49,17 +52,16 @@ public class NewTaskActivity extends AppCompatActivity {
                 int day = datePicker.getDayOfMonth();
                 int month = datePicker.getMonth() + 1;
                 int year = datePicker.getYear();
-                String date = year + "-" + month + "-" + day;
+                Date date = new Date(year, month, day);
+                System.out.println("year: " + year + " month: " + month + " day: " + day); // HEY RACHAEL for today: year: 2016 month: 11 day: 9
+                Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String stringDate = formatter.format(date);
 
-                // TODO: actually get the tag, don't create a new one
-                String tagName = tagSpinner.getSelectedItem().toString();
-                TaskTag tag = new TaskTag("getActualTag", new Color());
-                Task newTask = new Task(taskName, date.toString(), taskDescription, false, tag);
+                // TODO: actually get tagId
+                int tagId = NO_TAG_SELECTED;
 
-//                Intent resultIntent = new Intent();
-//                setResult(RESULT_OK, resultIntent);
-
-                dbHelper.addTask(taskName, date, taskDescription, 0, NO_TAG_SELECTED);
+                System.out.println("Date being sent to DBHelper.addTask(): " + stringDate); // HEY RACHAEL value printed to console: 3916-12-09 -> date formatter is wrong?
+                dbHelper.addTask(taskName, stringDate, taskDescription, 0, tagId);
 
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);

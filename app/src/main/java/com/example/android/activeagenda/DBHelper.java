@@ -94,7 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.moveToFirst();
         Task newTask = cursorToTask(cursor);
         cursor.close();
-        System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name);
+        System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name + ", Date: " + dueDate);
         return newTask;
     }
 
@@ -102,6 +102,10 @@ public class DBHelper extends SQLiteOpenHelper {
         long id = task.id;
         db.delete(TASKS_TABLE_NAME, ID_COL + " = " + id, null);
         System.out.println("Deleted a Task! ID: " + id);
+    }
+
+    public void deleteAllTasksFromDB() {
+        db.execSQL("delete from " + TASKS_TABLE_NAME);
     }
 
     public List<Task> getAllTasks() {
@@ -119,7 +123,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* TODO: Get all tasks related to a date */
     public List<Task> getAllTasks(String date) {
-        return null;
+        List<Task> allTasks = new ArrayList<>();
+        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, TASKS_DATE_COL + " = " + date, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Task task = cursorToTask(cursor);
+            allTasks.add(task);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return allTasks;
+
     }
 
     /* TODO: Get all tasks related to a tag */
