@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,6 +32,7 @@ public class DayViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_day_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         dbHelper = new DBHelper(getApplicationContext());
 
         // TODO: get actual date from previous activity
@@ -41,13 +44,9 @@ public class DayViewActivity extends AppCompatActivity {
         curDateString = formatter.format(curDate);
 
 
-        // TODO: get actual set of tasks from this date - check that this works
+        // TODO: get actual set of tasks from this date - getAllTasks() with no parameter means get every task regardless of date,
         System.out.println("The current date is: " + curDateString);
-        allTasks = dbHelper.getAllTasks(curDateString);
-        System.out.println(allTasks.size());
-        for(Task task : allTasks){
-            System.out.println("Task: " + task.name);
-        }
+        allTasks = dbHelper.getAllTasks();
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
         listView.setAdapter(adapter);
@@ -81,6 +80,7 @@ public class DayViewActivity extends AppCompatActivity {
 
 
 
+
         // TODO: Create onClick() for decrease data and increase data buttons
 
     }
@@ -93,13 +93,35 @@ public class DayViewActivity extends AppCompatActivity {
             System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("resultCode is OK");
-                allTasks = dbHelper.getAllTasks(curDateString);
+                allTasks = dbHelper.getAllTasks();
                 adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
                 ListView listView = (ListView) findViewById(R.id.day_view_lv);
                 listView.setAdapter(adapter);
             }
         }
 
+    }
+
+    @Override
+    /* Create the overflow menu */
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    /* Set click actions of overflow menu options */
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_manage_tags:
+                Intent intent = new Intent(this, ManageTagsActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

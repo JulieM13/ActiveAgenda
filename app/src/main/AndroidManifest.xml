@@ -23,6 +23,10 @@
             android:label="@string/title_activity_day_view"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NewTaskActivity" />
+        <activity
+            android:name=".ManageTagsActivity"
+            android:label="@string/title_activity_manage_tags"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
