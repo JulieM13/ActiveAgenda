@@ -11,11 +11,13 @@ public class TaskTag {
     public String name;
     public Color color;
 
-    public TaskTag(long id, String name, Color color) {
-        this.id = id;
+    public TaskTag(String name, Color color) {
         this.name = name;
         this.color = color;
     }
 
+    public void setId(long id){
+        this.id = id;
+    }
     // TODO: Add getters and setters for each attribute
 }

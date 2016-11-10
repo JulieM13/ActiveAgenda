@@ -1,5 +1,7 @@
 package com.example.android.activeagenda;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -43,18 +45,19 @@ public class NewTaskActivity extends AppCompatActivity {
                 String taskDescription = taskDescriptionET.getText().toString();
                 String tagName = tagSpinner.getSelectedItem().toString();
                 int day = datePicker.getDayOfMonth();
+                System.out.println(day);
                 int month = datePicker.getMonth() + 1;
                 int year = datePicker.getYear();
                 Date date =  new Date(year, month, day);
 
                 // TODO: actually get the tag, don't create a new one
-//                TaskTag tag = new TaskTag("getActualTag", new Color());
-//                Task newTask = new Task(taskName, date, tag, taskDescription, false);
+                TaskTag tag = new TaskTag("getActualTag", new Color());
+                Task newTask = new Task(taskName, date.toString(), taskDescription, false, tag);
 
-//                Intent resultIntent = new Intent();
-//                resultIntent.putExtra("TASK", newTask);
-//                setResult(RESULT_OK, resultIntent);
-//                finish();
+                Intent resultIntent = new Intent();
+                setResult(RESULT_OK, resultIntent);
+                finish();
+
             }
         });
     }

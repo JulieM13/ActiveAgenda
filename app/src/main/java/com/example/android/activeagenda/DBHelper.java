@@ -184,16 +184,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private Task cursorToTask(Cursor cursor) {
-        Task task = new Task(
-                cursor.getLong(0),      // id
+        Task task = new Task(      // id
                 cursor.getString(1),    // name
                 cursor.getString(2),    // date
                 cursor.getString(3),    // description
-                cursor.getInt(4),       // completed
+                (cursor.getInt(4) != 0),       // completed
                 getTag(cursor.getLong(5)));     // tag
+        task.setId(cursor.getLong(0));
         return task;
     }
-
 
     /* TODO: Get a tag based off an id */
     public TaskTag getTag(long id) {
