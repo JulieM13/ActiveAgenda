@@ -4,7 +4,6 @@ package com.example.android.activeagenda;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.graphics.Color;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -204,6 +202,10 @@ public class DBHelper extends SQLiteOpenHelper {
     /* TODO*/
     public List<TaskTag> getAllTags(Color color) {
         return null;
+    }
+
+    public void deleteAllTagsFromDB() {
+        db.execSQL("delete from " + TAGS_TABLE_NAME);
     }
 
     /* TODO: check*/

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -39,7 +40,20 @@ public class ManageTagsActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.manage_tags_lv);
         listView.setAdapter(adapter);
 
+        // Delete all tags button for testing purposes
+        Button deleteTagsBtn = (Button) findViewById(R.id.manage_tags_delete_all_tags_btn);
+        deleteTagsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("All tags deleted!");
+                dbHelper.deleteAllTagsFromDB();
 
+                allTags = dbHelper.getAllTags();
+                adapter = new ManageTagsAdapter(getApplicationContext(), R.layout.manage_tags_item, allTags);
+                ListView listView = (ListView) findViewById(R.id.manage_tags_lv);
+                listView.setAdapter(adapter);
+            }
+        });
 
     }
 

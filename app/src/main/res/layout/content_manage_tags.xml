@@ -29,4 +29,11 @@
         android:layout_below="@+id/manage_tags_cur_tags_text">
     </ListView>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/manage_tags_delete_all_tags_btn"
+        android:text="DELETE ALL TAGS"
+        android:layout_below="@id/manage_tags_lv"/>
+
 </RelativeLayout>
