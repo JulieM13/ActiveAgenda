@@ -50,7 +50,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 }
                 String taskDescription = taskDescriptionET.getText().toString();
                 int day = datePicker.getDayOfMonth();
-                int month = datePicker.getMonth() + 1;
+                int month = datePicker.getMonth();
                 int year = datePicker.getYear() - 1900; //apparently this is a thing http://stackoverflow.com/questions/17985467/datepicker-dialog-picks-wrong-year
                 Date date = new Date(year, month, day);
                 System.out.println("year: " + year + " month: " + month + " day: " + day); // HEY RACHAEL for today: year: 2016 month: 11 day: 9

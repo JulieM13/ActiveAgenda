@@ -46,7 +46,7 @@ public class DayViewActivity extends AppCompatActivity {
 
         // TODO: get actual set of tasks from this date - getAllTasks() with no parameter means get every task regardless of date,
         System.out.println("The current date is: " + curDateString);
-        allTasks = dbHelper.getAllTasks();
+        allTasks = dbHelper.getAllTasks(curDate);
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
         listView.setAdapter(adapter);

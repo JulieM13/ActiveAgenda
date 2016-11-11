@@ -4,11 +4,16 @@ package com.example.android.activeagenda;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -78,6 +83,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /* TODO: Get a task based off an id */
     public Task getTask(long id) {
         //join with tags table to also return tag info
+
         return null;
     }
 
@@ -122,12 +128,17 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /* TODO: Get all tasks related to a date */
-    public List<Task> getAllTasks(String date) {
+    public List<Task> getAllTasks(Date date) {
+        System.out.println("check that date");
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String stringDate = formatter.format(date);
         List<Task> allTasks = new ArrayList<>();
-        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, TASKS_DATE_COL + " = " + date, null, null, null, null);
+        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, TASKS_DATE_COL + " = ?", new String[]{stringDate}, null, null, null);
         cursor.moveToFirst();
+        System.out.println(DatabaseUtils.dumpCursorToString(cursor));
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
+            System.out.println("WE GOT ONE!");
             allTasks.add(task);
             cursor.moveToNext();
         }
