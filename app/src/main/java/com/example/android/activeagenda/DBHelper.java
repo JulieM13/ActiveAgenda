@@ -99,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Task newTask = cursorToTask(cursor);
         newTask.setId(insertId);
         cursor.close();
-        System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name + ", Date: " + dueDate);
+        System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name + ", Date: " + dueDate + ", tagID: " + tagId);
         return newTask;
     }
 
@@ -175,8 +175,10 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, ID_COL + " = " + insertId, null, null, null, null );
         cursor.moveToFirst();
         TaskTag newTag = cursorToTaskTag(cursor);
+        newTag.setId(insertId);
         cursor.close();
         System.out.println("Added a new Tag! Insert ID: " + insertId + ", Name: " + name);
+        System.out.println("Tag id in DBHelper: " + newTag.id);
         return newTag;
     }
 
@@ -185,7 +187,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    /* TODO*/
     public List<TaskTag> getAllTags() {
         List<TaskTag> allTags = new ArrayList<>();
         Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, null, null, null, null, null);
