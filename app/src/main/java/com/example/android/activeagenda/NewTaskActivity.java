@@ -13,18 +13,34 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class NewTaskActivity extends AppCompatActivity {
 
     private DBHelper dbHelper;
     public int NO_TAG_SELECTED = -1;
+    private Format formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Bundle extras = getIntent().getExtras();
+        Date selectedDate = new Date();
+        try {
+            selectedDate = (Date)formatter.parseObject((String) extras.get("DATE"));
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
         setContentView(R.layout.activity_new_task);
+        DatePicker datePicker = (DatePicker)findViewById(R.id.new_task_datepicker);
+        Calendar calendar = Calendar.getInstance();
+        System.out.println(calendar);
+        calendar.setTime(selectedDate);
+        datePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         dbHelper = new DBHelper(this);
 
