@@ -99,6 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, ID_COL + " = " + insertId, null, null, null, null );
         cursor.moveToFirst();
         Task newTask = cursorToTask(cursor);
+        newTask.setId(insertId);
         cursor.close();
         System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name + ", Date: " + dueDate);
         return newTask;
@@ -135,10 +136,8 @@ public class DBHelper extends SQLiteOpenHelper {
         List<Task> allTasks = new ArrayList<>();
         Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, TASKS_DATE_COL + " = ?", new String[]{stringDate}, null, null, null);
         cursor.moveToFirst();
-        System.out.println(DatabaseUtils.dumpCursorToString(cursor));
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
-            System.out.println("WE GOT ONE!");
             allTasks.add(task);
             cursor.moveToNext();
         }

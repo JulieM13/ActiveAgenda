@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class DayViewActivity extends AppCompatActivity {
     private DayViewAdapter adapter;
     private Date curDate;
     private String curDateString;
+    private Format formatter;
+    private TextView dateTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +40,13 @@ public class DayViewActivity extends AppCompatActivity {
         dbHelper = new DBHelper(getApplicationContext());
 
         // TODO: get actual date from previous activity
-        TextView dateTV = (TextView) findViewById(R.id.day_view_date_tv);
+        dateTV = (TextView) findViewById(R.id.day_view_date_tv);
         curDate = new Date();
         dateTV.setText(DateFormat.getDateInstance().format(curDate));
 
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
         curDateString = formatter.format(curDate);
 
-
-        // TODO: get actual set of tasks from this date - getAllTasks() with no parameter means get every task regardless of date,
         System.out.println("The current date is: " + curDateString);
         allTasks = dbHelper.getAllTasks(curDate);
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
@@ -70,19 +72,49 @@ public class DayViewActivity extends AppCompatActivity {
                 System.out.println("Deleting all Tasks from DB!");
                 dbHelper.deleteAllTasksFromDB();
 
-                allTasks = dbHelper.getAllTasks();
+                allTasks = dbHelper.getAllTasks(curDate);
                 adapter = new DayViewAdapter(getApplicationContext(), R.layout.day_view_item, allTasks);
                 ListView listView = (ListView) findViewById(R.id.day_view_lv);
                 listView.setAdapter(adapter);
             }
         });
 
+        Button prevDay = (Button)findViewById(R.id.day_view_decrease_date_btn);
+        prevDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(curDate);
+                c.add(Calendar.DATE, -1);
+                Date nextDate = c.getTime();
+                updateDate(nextDate);
+            }
+        });
 
+        final Button nextDay = (Button)findViewById(R.id.day_view_increase_date_btn);
+        nextDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(curDate);
+                c.add(Calendar.DATE, 1);
+                Date nextDate = c.getTime();
+                updateDate(nextDate);
+            }
+        });
 
 
 
         // TODO: Create onClick() for decrease data and increase data buttons
 
+    }
+
+    private void updateDate(Date day){
+        curDate = day;
+        curDateString = formatter.format(curDate);
+        dateTV.setText(DateFormat.getDateInstance().format(curDate));
+        allTasks = dbHelper.getAllTasks(curDate);
+        adapter.updateTasks(allTasks);
     }
 
     @Override
@@ -93,7 +125,7 @@ public class DayViewActivity extends AppCompatActivity {
             System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("resultCode is OK");
-                allTasks = dbHelper.getAllTasks();
+                allTasks = dbHelper.getAllTasks(curDate);
                 adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
                 ListView listView = (ListView) findViewById(R.id.day_view_lv);
                 listView.setAdapter(adapter);

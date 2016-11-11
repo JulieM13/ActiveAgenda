@@ -70,5 +70,10 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         TextView taskDescription;
     }
 
+    public void updateTasks(List<Task> tasks){
+        this.allTasks = tasks;
+        notifyDataSetChanged();
+    }
+
 
 }
