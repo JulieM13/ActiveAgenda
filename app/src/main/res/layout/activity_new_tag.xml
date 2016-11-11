@@ -16,13 +16,18 @@
         android:hint="Enter a New Tag Name"
         android:id="@+id/new_tag_tag_name_et"/>
 
-    <!-- TODO: add color picker here -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose a Color"
+        android:id="@+id/new_tag_choose_color_btn"
+        android:layout_below="@id/new_tag_tag_name_et"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Tag"
         android:id="@+id/new_tag_add_tag_btn"
-        android:layout_below="@id/new_tag_tag_name_et"/>
+        android:layout_below="@id/new_tag_choose_color_btn"/>
 
 </RelativeLayout>

@@ -29,7 +29,6 @@ public class ManageTagsActivity extends AppCompatActivity {
         createNewTagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Create new tag fab clicked");
                 Intent intent = new Intent(getApplicationContext(), NewTagActivity.class);
                 startActivityForResult(intent, 1);
             }
