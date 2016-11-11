@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Tag"
-        android:id="@+id/new_tag_add_tag_btn"
+        android:id="@+id/new_tag_create_tag_btn"
         android:layout_below="@id/new_tag_choose_color_btn"/>
 
 </RelativeLayout>

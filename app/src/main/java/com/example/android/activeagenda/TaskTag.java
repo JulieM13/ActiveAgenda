@@ -1,7 +1,5 @@
 package com.example.android.activeagenda;
 
-import android.graphics.Color;
-
 /**
  * Created by Julie on 10/26/2016.
  */
@@ -9,9 +7,9 @@ import android.graphics.Color;
 public class TaskTag {
     public long id;
     public String name;
-    public Color color;
+    public int color;
 
-    public TaskTag(String name, Color color) {
+    public TaskTag(String name, int color) {
         this.name = name;
         this.color = color;
     }

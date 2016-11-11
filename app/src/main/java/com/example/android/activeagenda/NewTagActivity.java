@@ -1,24 +1,32 @@
 package com.example.android.activeagenda;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
 public class NewTagActivity extends AppCompatActivity {
+
+    private int redValue = 0;
+    private int greenValue = 0;
+    private int blueValue = 0;
+    private DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_tag);
 
+        dbHelper = new DBHelper(this);
+
         /* Color Picker code from: http://stackoverflow.com/questions/6980906/android-color-picker */
-        int defaultColorR = 0;
-        int defaultColorG = 0;
-        int defaultColorB = 0;
-        final ColorPicker cp = new ColorPicker(NewTagActivity.this, defaultColorR, defaultColorG, defaultColorB);
+        final ColorPicker cp = new ColorPicker(NewTagActivity.this, redValue, greenValue, blueValue);
 
         /* OnClickListener for the choose color button */
         Button chooseColorBtn = (Button) findViewById(R.id.new_tag_choose_color_btn);
@@ -33,17 +41,11 @@ public class NewTagActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        /* You can get single channel (value 0-255) */
-                        int selectedColorR = cp.getRed();
-                        int selectedColorG = cp.getGreen();
-                        int selectedColorB = cp.getBlue();
-
-                        /* Or the android RGB Color (see the android Color class reference) */
-                        int selectedColorRGB = cp.getColor();
-
-                        // TODO: Do some stuff with the color values here
-                        System.out.println("Color chosen: red " + selectedColorR + ", green " + selectedColorG + ", blue " + selectedColorB);
-                        System.out.println("Selected color in one call: " + selectedColorRGB);
+                        /* Get the values for each color (value 0-255) */
+                        redValue = cp.getRed();
+                        greenValue = cp.getGreen();
+                        blueValue = cp.getBlue();
+                        System.out.println("Color chosen: red " + redValue + ", green " + greenValue + ", blue " + blueValue);
 
                         cp.dismiss();
                     }
@@ -51,7 +53,21 @@ public class NewTagActivity extends AppCompatActivity {
             }
         });
 
+        Button createNewTagBtn = (Button) findViewById(R.id.new_tag_create_tag_btn);
+        createNewTagBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText tagNameET = (EditText) findViewById(R.id.new_tag_tag_name_et);
+                String tagName = tagNameET.getText().toString();
+                int color = Color.rgb(redValue, greenValue, blueValue);
 
+                dbHelper.addTag(tagName, color);
+
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
+            }
+        });
 
 
     }

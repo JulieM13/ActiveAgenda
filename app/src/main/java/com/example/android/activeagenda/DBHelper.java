@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + TAGS_TABLE_NAME +
                     "(" + ID_COL + " INTEGER PRIMARY KEY NOT NULL, " +
                     TAGS_NAME_COL + " TEXT NOT NULL, " +
-                    TAGS_COLOR_COL + " TEXT NOT NULL);";
+                    TAGS_COLOR_COL + " INTEGER NOT NULL);";
     private static final String DB_TASKS=
             "CREATE TABLE IF NOT EXISTS " + TASKS_TABLE_NAME +
                     "(" + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
@@ -158,8 +158,18 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /* TODO*/
-    public TaskTag addTag(long id, String name, Color color) {
-        return null;
+    public TaskTag addTag(String name, int color) {
+        ContentValues values = new ContentValues();
+        values.put(TAGS_NAME_COL, name);
+        values.put(TAGS_COLOR_COL, color);
+
+        long insertId = db.insert(TAGS_TABLE_NAME, null, values);
+        Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, ID_COL + " = " + insertId, null, null, null, null );
+        cursor.moveToFirst();
+        TaskTag newTag = cursorToTaskTag(cursor);
+        cursor.close();
+        System.out.println("Added a new Tag! Insert ID: " + insertId + ", Name: " + name);
+        return newTag;
     }
 
     /* TODO*/
@@ -169,7 +179,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* TODO*/
     public List<TaskTag> getAllTags() {
-        return null;
+        List<TaskTag> allTags = new ArrayList<>();
+        Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, null, null, null, null, null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            TaskTag tag = cursorToTaskTag(cursor);
+            allTags.add(tag);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return allTags;
     }
 
     /* TODO*/
@@ -177,9 +196,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    /* TODO*/
+    /* TODO: check*/
     private TaskTag cursorToTaskTag(Cursor cursor) {
-        return null;
+        System.out.println("Cursor values: " + cursor.getString(0) + ", " + cursor.getString(1));
+        TaskTag tag = new TaskTag(
+                cursor.getString(0),        // name
+                cursor.getInt(1)); // tagId
+        return tag;
     }
 
 }
