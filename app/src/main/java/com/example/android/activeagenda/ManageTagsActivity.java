@@ -33,7 +33,7 @@ public class ManageTagsActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
-        
+
         allTags = dbHelper.getAllTags();
         adapter = new ManageTagsAdapter(this, R.layout.manage_tags_item, allTags);
         ListView listView = (ListView) findViewById(R.id.manage_tags_lv);
