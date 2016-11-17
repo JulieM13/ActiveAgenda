@@ -49,9 +49,7 @@ public class ManageTagsActivity extends AppCompatActivity {
                 dbHelper.deleteAllTagsFromDB();
 
                 allTags = dbHelper.getAllTags();
-                adapter = new ManageTagsAdapter(getApplicationContext(), R.layout.manage_tags_item, allTags);
-                ListView listView = (ListView) findViewById(R.id.manage_tags_lv);
-                listView.setAdapter(adapter);
+                adapter.updateTags(allTags);
             }
         });
 
@@ -60,16 +58,10 @@ public class ManageTagsActivity extends AppCompatActivity {
     @Override
     // We come back from the create new tag dialog
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("In onActivityResult");
         if (requestCode == 1) {
-            System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("resultCode is OK");
                 allTags = dbHelper.getAllTags();
-                System.out.println("Size of all tags: " + allTags.size());
-                adapter = new ManageTagsAdapter(this, R.layout.manage_tags_item, allTags);
-                ListView listView = (ListView) findViewById(R.id.manage_tags_lv);
-                listView.setAdapter(adapter);
+                adapter.updateTags(allTags);
             }
         }
 

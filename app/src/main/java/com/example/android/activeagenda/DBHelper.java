@@ -207,6 +207,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void deleteAllTagsFromDB() {
         db.execSQL("delete from " + TAGS_TABLE_NAME);
+
+        // Add a default tag so things don't blow up
+        addTag("NO TAG SELECTED", Color.rgb(0, 0, 0) );
+        
     }
 
     /* TODO: check*/

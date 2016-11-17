@@ -1,6 +1,5 @@
 package com.example.android.activeagenda;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +31,7 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
         ManageTagsAdapter.TagHolder holder = null;
 
         if (row == null) {
-            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new ManageTagsAdapter.TagHolder();
@@ -62,6 +61,11 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
     static class TagHolder {
         TextView tagName;
         // TODO: figure out how to display color here
+    }
+
+    public void updateTags(List<TaskTag> tags){
+        this.allTags = tags;
+        notifyDataSetChanged();
     }
 
 

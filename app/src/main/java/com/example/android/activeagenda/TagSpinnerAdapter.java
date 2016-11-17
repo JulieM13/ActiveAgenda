@@ -76,10 +76,4 @@ public class TagSpinnerAdapter extends ArrayAdapter<TaskTag> {
         // TODO: add a color thingy?
         // I think spinners might just want a TextView, based on errors I've been getting
     }
-
-    public void updateTags(List<TaskTag> tags){
-        this.allTags = tags;
-        notifyDataSetChanged();
-    }
-
 }
