@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,9 +72,7 @@ public class DayViewActivity extends AppCompatActivity {
                 dbHelper.deleteAllTasksFromDB();
 
                 allTasks = dbHelper.getAllTasks(curDate);
-                adapter = new DayViewAdapter(getApplicationContext(), R.layout.day_view_item, allTasks);
-                ListView listView = (ListView) findViewById(R.id.day_view_lv);
-                listView.setAdapter(adapter);
+                adapter.updateTasks(allTasks);
             }
         });
 
@@ -126,9 +123,7 @@ public class DayViewActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("resultCode is OK");
                 allTasks = dbHelper.getAllTasks(curDate);
-                adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
-                ListView listView = (ListView) findViewById(R.id.day_view_lv);
-                listView.setAdapter(adapter);
+                adapter.updateTasks(allTasks);
             }
         }
 
