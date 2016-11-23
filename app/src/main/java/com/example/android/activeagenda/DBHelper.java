@@ -154,13 +154,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(1),        // date
                 cursor.getString(2),        // description
                 (cursor.getInt(3) != 0),    // completed
-                getTag(cursor.getLong(4))); // tagId
+                cursor.getLong(4)); // tagId
         return task;
     }
 
     /* TODO: Get a tag based off an id */
     public TaskTag getTag(long id) {
-        return null;
+        Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, ID_COL + " = " + id, null, null, null, null);
+        cursor.moveToFirst();
+        TaskTag tag =  cursorToTaskTag(cursor);
+        cursor.close();
+        return tag;
     }
 
     public TaskTag addTag(String name, int color) {

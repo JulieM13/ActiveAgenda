@@ -2,6 +2,7 @@ package com.example.android.activeagenda;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +47,22 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
             holder = (TaskHolder)row.getTag();
         }
 
-        Task curTask = allTasks.get(position);
+        final Task curTask = allTasks.get(position);
         holder.checkBox.setChecked(curTask.isCompleted);
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ViewTaskActivity.class);
+                intent.putExtra("TASK_NAME", curTask.name);
+                intent.putExtra("TASK_DESCRIPTION", curTask.description);
+                intent.putExtra("TASK_DUE_DATE", curTask.dueDate);
+                intent.putExtra("TAG_ID", curTask.tagId);
+                getContext().startActivity(intent);
+            }
+        });
 
         return row;
     }
