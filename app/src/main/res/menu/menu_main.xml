@@ -8,6 +8,11 @@
         android:title="Manage Tags"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_export_tasks_to_phone_cal"
+        android:orderInCategory="100"
+        android:title="Export to Calendar"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

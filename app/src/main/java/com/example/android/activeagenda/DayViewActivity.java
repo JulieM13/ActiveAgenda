@@ -3,6 +3,7 @@ package com.example.android.activeagenda;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -28,6 +32,11 @@ public class DayViewActivity extends AppCompatActivity {
     private String curDateString;
     private Format formatter;
     private TextView dateTV;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +85,7 @@ public class DayViewActivity extends AppCompatActivity {
             }
         });
 
-        Button prevDay = (Button)findViewById(R.id.day_view_decrease_date_btn);
+        Button prevDay = (Button) findViewById(R.id.day_view_decrease_date_btn);
         prevDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +97,7 @@ public class DayViewActivity extends AppCompatActivity {
             }
         });
 
-        final Button nextDay = (Button)findViewById(R.id.day_view_increase_date_btn);
+        final Button nextDay = (Button) findViewById(R.id.day_view_increase_date_btn);
         nextDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,12 +110,14 @@ public class DayViewActivity extends AppCompatActivity {
         });
 
 
-
         // TODO: Create onClick() for decrease data and increase data buttons
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    private void updateDate(Date day){
+    private void updateDate(Date day) {
         curDate = day;
         curDateString = formatter.format(curDate);
         dateTV.setText(DateFormat.getDateInstance().format(curDate));
@@ -142,9 +153,27 @@ public class DayViewActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, ManageTagsActivity.class);
                 startActivity(intent);
                 return true;
+
+            case R.id.action_export_tasks_to_phone_cal:
+                exportAllTasksToCalendar();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    private void exportAllTasksToCalendar() {
+        for (int i = 0; i < allTasks.size(); i++) {
+            Task curTask = allTasks.get(i);
+            Intent calIntent = new Intent(Intent.ACTION_EDIT)
+                .setType("vnd.android.cursor.item/event")
+                .putExtra(CalendarContract.Events.TITLE, curTask.name)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, curTask.dueDate)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, curTask.dueDate)
+                .putExtra(CalendarContract.Events.ALL_DAY, false)
+                .putExtra(CalendarContract.Events.ALL_DAY, curTask.description);
+            startActivity(calIntent);
+        }
+    }
 }
