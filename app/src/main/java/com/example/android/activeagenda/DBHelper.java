@@ -99,14 +99,14 @@ public class DBHelper extends SQLiteOpenHelper {
         Task newTask = cursorToTask(cursor);
         newTask.setId(insertId);
         cursor.close();
-        System.out.println("Added a new Task! Insert ID: " + insertId + ", Name: " + name + ", Date: " + dueDate + ", tagID: " + tagId);
+        System.out.println("DBHELPER: Added a new Task! Insert ID: " + insertId + ", Name: " + name + ", Date: " + dueDate + ", tagID: " + tagId);
         return newTask;
     }
 
     public void deleteTask(Task task) {
         long id = task.id;
         db.delete(TASKS_TABLE_NAME, ID_COL + " = " + id, null);
-        System.out.println("Deleted a Task! ID: " + id);
+        System.out.println("DBHELPER: Deleted a Task! ID: " + id);
     }
 
     public void deleteAllTasksFromDB() {
@@ -126,9 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return allTasks;
     }
 
-    /* TODO: Get all tasks related to a date */
     public List<Task> getAllTasks(Date date) {
-        System.out.println("check that date");
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         String stringDate = formatter.format(date);
         List<Task> allTasks = new ArrayList<>();
@@ -150,7 +148,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     private Task cursorToTask(Cursor cursor) {
-        System.out.println("Cursor values: " + cursor.getString(0) + ", " + cursor.getString(1) + ", " +cursor.getString(2) + ", " +cursor.getInt(3) + "," + cursor.getLong(4));
+        System.out.println("DBHELPER: cursorToTask Cursor values: " + cursor.getString(0) + ", " + cursor.getString(1) + ", " +cursor.getString(2) + ", " +cursor.getInt(3) + "," + cursor.getLong(4));
         Task task = new Task(
                 cursor.getString(0),        // name
                 cursor.getString(1),        // date
@@ -165,7 +163,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    /* TODO*/
     public TaskTag addTag(String name, int color) {
         ContentValues values = new ContentValues();
         values.put(TAGS_NAME_COL, name);
@@ -177,8 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
         TaskTag newTag = cursorToTaskTag(cursor);
         newTag.setId(insertId);
         cursor.close();
-        System.out.println("Added a new Tag! Insert ID: " + insertId + ", Name: " + name);
-        System.out.println("Tag id in DBHelper: " + newTag.id);
+        System.out.println("DBHELPER: Added a new Tag! Insert ID: " + insertId + ", Name: " + newTag.name + ", Tag ID: " + newTag.id);
         return newTag;
     }
 
@@ -191,10 +187,13 @@ public class DBHelper extends SQLiteOpenHelper {
         List<TaskTag> allTags = new ArrayList<>();
         Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, null, null, null, null, null);
         cursor.moveToFirst();
+        int idIndex = 0;
         while (!cursor.isAfterLast()) {
             TaskTag tag = cursorToTaskTag(cursor);
+            tag.setId(idIndex);
             allTags.add(tag);
             cursor.moveToNext();
+            idIndex++;
         }
         cursor.close();
         return allTags;
@@ -213,12 +212,11 @@ public class DBHelper extends SQLiteOpenHelper {
         
     }
 
-    /* TODO: check*/
     private TaskTag cursorToTaskTag(Cursor cursor) {
-        System.out.println("Cursor values: " + cursor.getString(0) + ", " + cursor.getString(1));
+        System.out.println("DBHELPER: cursorToTaskTag Cursor values: Tag Name: " + cursor.getString(0) + ", Tag color: " + cursor.getInt(1));
         TaskTag tag = new TaskTag(
                 cursor.getString(0),        // name
-                cursor.getInt(1)); // tagId
+                cursor.getInt(1)); // color
         return tag;
     }
 

@@ -117,16 +117,12 @@ public class DayViewActivity extends AppCompatActivity {
     @Override
     // We come back from the create new task dialog
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("In onActivityResult");
         if (requestCode == 1) {
-            System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("resultCode is OK");
                 allTasks = dbHelper.getAllTasks(curDate);
                 adapter.updateTasks(allTasks);
             }
         }
-
     }
 
     @Override

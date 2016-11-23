@@ -45,7 +45,6 @@ public class ManageTagsActivity extends AppCompatActivity {
         deleteTagsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("All tags deleted!");
                 dbHelper.deleteAllTagsFromDB();
 
                 allTags = dbHelper.getAllTags();
@@ -64,7 +63,6 @@ public class ManageTagsActivity extends AppCompatActivity {
                 adapter.updateTags(allTags);
             }
         }
-
     }
 
 }

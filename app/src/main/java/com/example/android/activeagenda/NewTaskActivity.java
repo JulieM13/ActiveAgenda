@@ -48,6 +48,8 @@ public class NewTaskActivity extends AppCompatActivity {
         // Get the user's tags and display them in the spinner
         Spinner dropdown = (Spinner)findViewById(R.id.new_task_tag_spinner);
         List<TaskTag> allTags = dbHelper.getAllTags();
+        for (int i = 0; i < allTags.size(); i++)
+            System.out.println("In NewTaskActivity Spinner Adapter Setup: Tag name: " + allTags.get(i).name + "     Tag id: " + allTags.get(i).id);
         TagSpinnerAdapter adapter = new TagSpinnerAdapter(this, R.layout.tag_spinner_item, allTags);
         dropdown.setAdapter(adapter);
 
@@ -76,8 +78,7 @@ public class NewTaskActivity extends AppCompatActivity {
 
                 // TODO: actually get tagId
                 TaskTag tag = (TaskTag)tagSpinner.getSelectedItem();
-                System.out.println("Tag name: " + tag.name);
-                System.out.println("Tag id: " + tag.id);
+                System.out.println("Grabbing selected tag from spinner in NewTaskActivity: Tag name: " + tag.name + ", Tag id: " + tag.id);
                 long tagId = ((TaskTag)tagSpinner.getSelectedItem()).id;
                 dbHelper.addTask(taskName, stringDate, taskDescription, NOT_COMPLETED, tagId);
 
