@@ -32,6 +32,7 @@ public class ViewTaskActivity extends AppCompatActivity {
         taskDueDateTV.setText("Due Date: " + taskDueDate.toString());
 
         TextView taskTagNameTV = (TextView) findViewById(R.id.view_task_task_tag_name);
+        System.out.println("VIEW-TASK-ACTIVITY: tag id: " + data.getLong("TAG_ID"));
         String tagName = dbHelper.getTag(data.getLong("TAG_ID")).name;
         taskTagNameTV.setText("Tag: " + tagName);
     }

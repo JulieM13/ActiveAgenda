@@ -154,15 +154,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(1),        // date
                 cursor.getString(2),        // description
                 (cursor.getInt(3) != 0),    // completed
-                cursor.getLong(4)); // tagId
+                cursor.getLong(4));         // tagId
         return task;
     }
 
-    /* TODO: Get a tag based off an id */
+    // TODO: Doesn't work for tag id 0?
     public TaskTag getTag(long id) {
+        System.out.println("DBHELPER: getTag() id: " + id);
         Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, ID_COL + " = " + id, null, null, null, null);
+        System.out.println("DBHELPER: items in cursor: " + cursor.getCount());
         cursor.moveToFirst();
         TaskTag tag =  cursorToTaskTag(cursor);
+        tag.setId(id);
         cursor.close();
         return tag;
     }
@@ -191,7 +194,7 @@ public class DBHelper extends SQLiteOpenHelper {
         List<TaskTag> allTags = new ArrayList<>();
         Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, null, null, null, null, null);
         cursor.moveToFirst();
-        int idIndex = 0;
+        int idIndex = 1;
         while (!cursor.isAfterLast()) {
             TaskTag tag = cursorToTaskTag(cursor);
             tag.setId(idIndex);

@@ -60,6 +60,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
                 intent.putExtra("TASK_DESCRIPTION", curTask.description);
                 intent.putExtra("TASK_DUE_DATE", curTask.dueDate);
                 intent.putExtra("TAG_ID", curTask.tagId);
+                System.out.println("DAY-VIEW-ADAPTER: tag id: " + curTask.tagId);
                 getContext().startActivity(intent);
             }
         });
