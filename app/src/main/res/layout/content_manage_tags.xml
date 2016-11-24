@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/manage_tags_delete_all_tags_btn"
         android:text="DELETE ALL TAGS"
+        android:layout_gravity="center"
         android:layout_below="@id/manage_tags_lv"/>
 
 </RelativeLayout>

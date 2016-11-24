@@ -11,6 +11,7 @@ import android.graphics.Color;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -144,7 +145,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* TODO: Get all tasks related to a tag */
     public List<Task> getAllTasks(TaskTag tag) {
-        return null;
+        long tagId = tag.id;
+        String columns = "";
+        for(String col: ALL_TASKS_COLS){
+            columns += " " + col + ",";
+        }
+        columns = columns.substring(0, columns.length()-1);
+        String query = "SELECT " + columns + " FROM " + TAGS_TABLE_NAME +
+                " tags INNER JOIN " + TASKS_TABLE_NAME + " tasks ON tags." + ID_COL + "=tasks."
+                + TASKS_TAGID_COL + " WHERE tags." + ID_COL + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(tagId)});
+        cursor.moveToFirst();
+        List<Task> tasks = new ArrayList<>();
+        while (!cursor.isAfterLast()) {
+            Task task = cursorToTask(cursor);
+            tasks.add(task);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return tasks;
     }
 
     private Task cursorToTask(Cursor cursor) {
