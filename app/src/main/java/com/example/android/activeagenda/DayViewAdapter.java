@@ -49,6 +49,13 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
 
         final Task curTask = allTasks.get(position);
         holder.checkBox.setChecked(curTask.isCompleted);
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                curTask.isCompleted = !curTask.isCompleted;
+                //TODO: update in DB
+            }
+        });
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);
 

@@ -127,6 +127,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return allTasks;
     }
 
+    public void setCompleted(Task task){
+        //update a tasks completion boolean
+        //I went with rawquery here since it was a lot simpler for me to wrap my mind around
+        //if you'd like to see more examples to refactor: http://stackoverflow.com/questions/5987863/android-sqlite-update-statement
+        int completed = task.isCompleted ? 1 : 0;
+        String query = "UPDATE " + TASKS_TABLE_NAME + " SET " + TASKS_COMPLETED_COL + "=? WHERE " +ID_COL + "=?";
+        db.rawQuery(query, new String[]{String.valueOf(completed), String.valueOf(task.id)});
+    }
+
     public List<Task> getAllTasks(Date date) {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         String stringDate = formatter.format(date);
@@ -227,6 +236,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* TODO*/
     public List<TaskTag> getAllTags(Color color) {
+        //HEY JULIE
+        /*
+        * So I've been looking at this one, and a real easy way to do this can be achieved, BUT it would require remaking our DB
+        * CREATE TABLE track(
+        *    trackid     INTEGER,
+        *    trackname   TEXT,
+        *    trackartist INTEGER DEFAULT 0 REFERENCES artist(artistid) ON DELETE SET DEFAULT
+        *  );
+        *   in this example we can set tagids of tasks refering to a tag to 0 or whatever we want (Or null)
+        *   (see ON DELETE NULL)
+        *   but otherwise we'd have to do some complex stuff to get this to work. Wanted to run this by you before working on it
+        * */
         return null;
     }
 
