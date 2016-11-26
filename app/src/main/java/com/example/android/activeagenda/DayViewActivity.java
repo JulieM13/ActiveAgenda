@@ -44,8 +44,21 @@ public class DayViewActivity extends MenuBarActivity {
         dbHelper = new DBHelper(getApplicationContext());
 
         // TODO: get actual date from previous activity
+        if (getIntent() != null ) {
+            Intent intent = getIntent();
+            if (intent.getExtras() != null) {
+                Bundle extras = intent.getExtras();
+                curDate = (Date)extras.getSerializable("CUR_DATE");
+                System.out.println("Next date out of bundle: " + curDate);
+            }
+        } else {
+            curDate = new Date();
+        }
+        System.out.println("before if: " + curDate);
+        if (curDate == null)
+            curDate = new Date();
+
         dateTV = (TextView) findViewById(R.id.day_view_date_tv);
-        curDate = new Date();
         dateTV.setText(DateFormat.getDateInstance().format(curDate));
 
         formatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -2,6 +2,7 @@ package com.example.android.activeagenda;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.view.LayoutInflater;
@@ -61,11 +62,22 @@ public class PlannerViewFragment extends Fragment {
             // Move to next day
             c.setTime(curDate);
             c.add(Calendar.DATE, day);
-            Date nextDate = c.getTime();
+            final Date nextDate = c.getTime();
 
             // Set a TextView to show a date
             TextView dateTV = new TextView(curActivity);
             dateTV.setText(DateFormat.getDateInstance().format(nextDate));
+            dateTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), DayViewActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("CUR_DATE", nextDate);
+                    intent.putExtras(bundle);
+                    System.out.println("next date into bundle: " + nextDate);
+                    startActivity(intent);
+                }
+            });
             dayLayout.addView(dateTV);
 
             // Get all the tasks for this day, and add a row item for each task
