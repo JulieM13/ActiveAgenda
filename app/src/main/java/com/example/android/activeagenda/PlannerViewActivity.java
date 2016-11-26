@@ -1,9 +1,8 @@
 package com.example.android.activeagenda;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-public class PlannerViewActivity extends AppCompatActivity {
+public class PlannerViewActivity extends MenuBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

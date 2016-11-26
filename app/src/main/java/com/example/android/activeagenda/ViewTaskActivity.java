@@ -2,10 +2,9 @@ package com.example.android.activeagenda;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-public class ViewTaskActivity extends AppCompatActivity {
+public class ViewTaskActivity extends MenuBarActivity {
 
     private DBHelper dbHelper;
 

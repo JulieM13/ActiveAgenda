@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class NewTaskActivity extends AppCompatActivity {
+public class NewTaskActivity extends MenuBarActivity {
 
     private DBHelper dbHelper;
     public int NO_TAG_SELECTED = -1;

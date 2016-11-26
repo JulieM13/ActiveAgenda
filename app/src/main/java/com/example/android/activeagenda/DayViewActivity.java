@@ -3,12 +3,8 @@ package com.example.android.activeagenda;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class DayViewActivity extends AppCompatActivity {
+public class DayViewActivity extends MenuBarActivity {
     private DBHelper dbHelper;
     private List<Task> allTasks;
     private DayViewAdapter adapter;
@@ -133,47 +129,6 @@ public class DayViewActivity extends AppCompatActivity {
                 allTasks = dbHelper.getAllTasks(curDate);
                 adapter.updateTasks(allTasks);
             }
-        }
-    }
-
-    @Override
-    /* Create the overflow menu */
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    /* Set click actions of overflow menu options */
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_manage_tags:
-                Intent intent = new Intent(this, ManageTagsActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_export_tasks_to_phone_cal:
-                exportAllTasksToCalendar();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void exportAllTasksToCalendar() {
-        for (int i = 0; i < allTasks.size(); i++) {
-            Task curTask = allTasks.get(i);
-            Intent calIntent = new Intent(Intent.ACTION_EDIT)
-                .setType("vnd.android.cursor.item/event")
-                .putExtra(CalendarContract.Events.TITLE, curTask.name)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, curTask.dueDate)
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, curTask.dueDate)
-                .putExtra(CalendarContract.Events.ALL_DAY, false)
-                .putExtra(CalendarContract.Events.ALL_DAY, curTask.description);
-            startActivity(calIntent);
         }
     }
 }
