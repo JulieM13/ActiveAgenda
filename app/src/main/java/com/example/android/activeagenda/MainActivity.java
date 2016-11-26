@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(this);
         Intent intent = new Intent(this, PlannerViewActivity.class); // TODO: change this to whatever our default view is
-        System.out.println("Launching Planner View");
         startActivity(intent);
 
     }
