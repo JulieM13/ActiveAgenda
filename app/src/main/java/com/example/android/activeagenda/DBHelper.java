@@ -115,6 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return newTask;
     }
 
+
     public void deleteTask(Task task) {
         long id = task.id;
         db.delete(TASKS_TABLE_NAME, ID_COL + " = " + id, null);
@@ -123,6 +124,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void updateTask(Task task){
         long id= task.id;
+        //TODO rest of the function, update all columns with new info
     }
 
     public void deleteAllTasksFromDB() {
