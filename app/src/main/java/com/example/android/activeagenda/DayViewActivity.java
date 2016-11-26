@@ -43,18 +43,15 @@ public class DayViewActivity extends MenuBarActivity {
 
         dbHelper = new DBHelper(getApplicationContext());
 
-        // TODO: get actual date from previous activity
         if (getIntent() != null ) {
             Intent intent = getIntent();
             if (intent.getExtras() != null) {
                 Bundle extras = intent.getExtras();
                 curDate = (Date)extras.getSerializable("CUR_DATE");
-                System.out.println("Next date out of bundle: " + curDate);
             }
         } else {
             curDate = new Date();
         }
-        System.out.println("before if: " + curDate);
         if (curDate == null)
             curDate = new Date();
 
@@ -64,7 +61,6 @@ public class DayViewActivity extends MenuBarActivity {
         formatter = new SimpleDateFormat("yyyy-MM-dd");
         curDateString = formatter.format(curDate);
 
-        System.out.println("The current date is: " + curDateString);
         allTasks = dbHelper.getAllTasks(curDate);
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
@@ -118,8 +114,6 @@ public class DayViewActivity extends MenuBarActivity {
             }
         });
 
-
-        // TODO: Create onClick() for decrease data and increase data buttons
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.

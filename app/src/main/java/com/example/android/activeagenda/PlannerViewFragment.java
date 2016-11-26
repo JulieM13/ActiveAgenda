@@ -74,7 +74,6 @@ public class PlannerViewFragment extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("CUR_DATE", nextDate);
                     intent.putExtras(bundle);
-                    System.out.println("next date into bundle: " + nextDate);
                     startActivity(intent);
                 }
             });
@@ -82,7 +81,7 @@ public class PlannerViewFragment extends Fragment {
 
             // Get all the tasks for this day, and add a row item for each task
             allTasks = dbHelper.getAllTasks(nextDate);
-            for(Task curTask : allTasks) {
+            for(final Task curTask : allTasks) {
                 View rowItem = inflater.inflate(R.layout.day_view_item, null);
 
                 CheckBox box = (CheckBox)rowItem.findViewById(R.id.dayViewItemCheckbox);
@@ -91,6 +90,21 @@ public class PlannerViewFragment extends Fragment {
                 name.setText(curTask.name);
                 TextView description = (TextView)rowItem.findViewById(R.id.dayViewItemTaskDescription);
                 description.setText(curTask.description);
+
+                // Clicking a task will bring you to ViewTask
+                rowItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), ViewTaskActivity.class);
+                        intent.putExtra("TASK_NAME", curTask.name);
+                        intent.putExtra("TASK_DESCRIPTION", curTask.description);
+                        intent.putExtra("TASK_DUE_DATE", curTask.dueDate);
+                        intent.putExtra("TAG_ID", curTask.tagId);
+                        System.out.println("DAY-VIEW-ADAPTER: tag id: " + curTask.tagId);
+                        getContext().startActivity(intent);
+                    }
+                });
+
                 dayLayout.addView(rowItem);
             }
 
