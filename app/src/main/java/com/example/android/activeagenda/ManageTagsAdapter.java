@@ -1,10 +1,12 @@
 package com.example.android.activeagenda;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -35,7 +37,10 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new ManageTagsAdapter.TagHolder();
+
             holder.tagName = (TextView)row.findViewById(R.id.manageTagsItemTagName);
+            holder.background = (LinearLayout)row.findViewById(R.id.background);
+
             row.setTag(holder);
         }
         else {
@@ -44,6 +49,13 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
 
         TaskTag curTag = allTags.get(position);;
         holder.tagName.setText(curTag.name);
+        holder.background.setBackgroundColor(curTag.color);
+
+        if(!isDarkColor(curTag.color)){
+            holder.tagName.setTextColor(Color.BLACK);
+        } else{
+            holder.tagName.setTextColor(Color.WHITE);
+        }
 
         return row;
     }
@@ -60,7 +72,7 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
 
     static class TagHolder {
         TextView tagName;
-        // TODO: figure out how to display color here
+        LinearLayout background;
     }
 
     public void updateTags(List<TaskTag> tags){
@@ -68,5 +80,14 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
         notifyDataSetChanged();
     }
 
+    private boolean isDarkColor(int color){
+        //http://stackoverflow.com/questions/24260853/check-if-color-is-dark-or-light-in-android
+        double darkness = 1-(0.299* Color.red(color) + 0.587*Color.green(color) + 0.114*Color.blue(color))/255;
+        if(darkness<0.5){
+            return false; // It's a light color
+        }else{
+            return true; // It's a dark color
+        }
+    }
 
 }

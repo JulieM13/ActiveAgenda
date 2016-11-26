@@ -82,8 +82,19 @@ public class DBHelper extends SQLiteOpenHelper {
     /* TODO: Get a task based off an id */
     public Task getTask(long id) {
         //join with tags table to also return tag info
-
-        return null;
+        String columns = "";
+        for(String col: ALL_TASKS_COLS){
+            columns += " " + col + ",";
+        }
+        columns = columns.substring(0, columns.length()-1);
+        String query = "SELECT " + columns + " FROM " + TAGS_TABLE_NAME +
+                " tags INNER JOIN " + TASKS_TABLE_NAME + " tasks ON tags." + ID_COL + "=tasks."
+                + TASKS_TAGID_COL + " WHERE tasks." + ID_COL + "=?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+        cursor.moveToFirst();
+        Task task = cursorToTask(cursor);
+        cursor.close();
+        return task;
     }
 
     public Task addTask(String name, String dueDate, String description, int isCompleted, long tagId) {
@@ -108,6 +119,10 @@ public class DBHelper extends SQLiteOpenHelper {
         long id = task.id;
         db.delete(TASKS_TABLE_NAME, ID_COL + " = " + id, null);
         System.out.println("DBHELPER: Deleted a Task! ID: " + id);
+    }
+
+    public void updateTask(Task task){
+        long id= task.id;
     }
 
     public void deleteAllTasksFromDB() {
@@ -187,6 +202,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // TODO: Doesn't work for tag id 0?
+    //is there a tag id 0?
     public TaskTag getTag(long id) {
         System.out.println("DBHELPER: getTag() id: " + id);
         Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, ID_COL + " = " + id, null, null, null, null);
@@ -215,7 +231,18 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /* TODO*/
     public void deleteTag(TaskTag tag) {
-
+        //HEY JULIE (This was supposed to go here but it was late and I was googling oops)
+        /*
+        * So I've been looking at this one, and a real easy way to do this can be achieved, BUT it would require remaking our DB
+        * CREATE TABLE track(
+        *    trackid     INTEGER,
+        *    trackname   TEXT,
+        *    trackartist INTEGER DEFAULT 0 REFERENCES artist(artistid) ON DELETE SET DEFAULT
+        *  );
+        *   in this example we can set tagids of tasks refering to a tag to 0 or whatever we want (Or null)
+        *   (see ON DELETE NULL)
+        *   but otherwise we'd have to do some complex stuff to get this to work. Wanted to run this by you before working on it
+        * */
     }
 
     public List<TaskTag> getAllTags() {
@@ -235,19 +262,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /* TODO*/
-    public List<TaskTag> getAllTags(Color color) {
+    public List<TaskTag> getAllTags(int color) {
         //HEY JULIE
-        /*
-        * So I've been looking at this one, and a real easy way to do this can be achieved, BUT it would require remaking our DB
-        * CREATE TABLE track(
-        *    trackid     INTEGER,
-        *    trackname   TEXT,
-        *    trackartist INTEGER DEFAULT 0 REFERENCES artist(artistid) ON DELETE SET DEFAULT
-        *  );
-        *   in this example we can set tagids of tasks refering to a tag to 0 or whatever we want (Or null)
-        *   (see ON DELETE NULL)
-        *   but otherwise we'd have to do some complex stuff to get this to work. Wanted to run this by you before working on it
-        * */
+        //because of how we're doing the ID's not sure we can pull this one off easily or cleanly.
+        //I also am not sure why we have this call, may be forgetting something
+        //but ideally no two tags would have the same color, I also can't see us having a use for this call
         return null;
     }
 

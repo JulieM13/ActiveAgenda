@@ -25,6 +25,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:id="@+id/manage_tags_lv"
         android:layout_below="@+id/manage_tags_cur_tags_text">
     </ListView>
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/manage_tags_delete_all_tags_btn"
         android:text="DELETE ALL TAGS"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/manage_tags_lv"/>
 
 </RelativeLayout>

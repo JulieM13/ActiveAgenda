@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:text="DELETE ALL TASKS"
         android:id="@+id/day_view_delete_all_tasks_btn"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/day_view_lv"/>
 
 </RelativeLayout>
