@@ -124,7 +124,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void updateTask(Task task){
         long id= task.id;
-        //TODO rest of the function, update all columns with new info
+        String name = task.name;
+        String description = task.description;
+        int completed = task.isCompleted? 1 : 0;
+        String date = task.dueDate;
+        long tagId = task.tagId;
+
+        String updateString = "UPDATE " + TASKS_TABLE_NAME +
+                " SET " + TASKS_TITLE_COL + "=?, " +
+                TASKS_DESCRIPTION_COL + "=?, " +
+                TASKS_DATE_COL + "=?, " +
+                TASKS_COMPLETED_COL + "=" + completed + ", " +
+                TASKS_TAGID_COL + "=" + tagId +
+                " WHERE " + ID_COL + "=" + id;
+
+        db.rawQuery(updateString, new String[]{name, description, date});
+        System.out.println("UPDATING TASK " + id + " with name: "+ name + " and description " + description);
     }
 
     public void deleteAllTasksFromDB() {

@@ -24,6 +24,17 @@ public class NewTagActivity extends MenuBarActivity {
 
         dbHelper = new DBHelper(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (getIntent() != null ) {
+            Intent intent = getIntent();
+            if (intent.getExtras() != null) {
+                //TODO: Edit tag stuff goes here
+                Bundle extras = intent.getExtras();
+
+            }
+        }
+
         /* Color Picker code from: http://stackoverflow.com/questions/6980906/android-color-picker */
         final ColorPicker cp = new ColorPicker(NewTagActivity.this, redValue, greenValue, blueValue);
 

@@ -25,9 +25,21 @@ public class NewTaskActivity extends MenuBarActivity {
     private Format formatter;
     public int NOT_COMPLETED = 0;
 
+    EditText taskNameET;
+    EditText taskDescriptionET;
+    Spinner tagSpinner;
+    DatePicker datePicker;
+
+    //save info for task if editing
+    long id = -1;
+    boolean completed = false;
+
+    boolean editing = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_new_task);
         formatter = new SimpleDateFormat("yyyy-MM-dd");
         Bundle extras = getIntent().getExtras();
         Date selectedDate = new Date();
@@ -36,8 +48,27 @@ public class NewTaskActivity extends MenuBarActivity {
         } catch (ParseException e){
             e.printStackTrace();
         }
-        setContentView(R.layout.activity_new_task);
-        DatePicker datePicker = (DatePicker)findViewById(R.id.new_task_datepicker);
+
+        taskNameET = (EditText) findViewById(R.id.new_task_name_et);
+        taskDescriptionET = (EditText) findViewById(R.id.new_task_description_et);
+        tagSpinner = (Spinner) findViewById(R.id.new_task_tag_spinner);
+        datePicker = (DatePicker) findViewById(R.id.new_task_datepicker);
+
+        //Edit Task
+        if(extras.getString("NAME")!=null){
+            editing = true; //we have to have a name
+            taskNameET.setText(extras.getString("NAME"));
+            tagSpinner.setSelection((int)extras.getLong("TAGID"));
+            id = extras.getLong("ID");
+            completed = extras.getBoolean("COMPLETED");
+            if(extras.getString("DESCRIPTION")!=null){
+                //description is optional
+                taskDescriptionET.setText(extras.getString("DESCRIPTION"));
+            }
+        }
+
+
+
         Calendar calendar = Calendar.getInstance();
         System.out.println(calendar);
         calendar.setTime(selectedDate);
@@ -55,14 +86,12 @@ public class NewTaskActivity extends MenuBarActivity {
 
 
         Button createNewTaskBtn = (Button) findViewById(R.id.create_new_task_btn);
+        if(editing){
+            createNewTaskBtn.setText("SAVE");
+        }
         createNewTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText taskNameET = (EditText) findViewById(R.id.new_task_name_et);
-                EditText taskDescriptionET = (EditText) findViewById(R.id.new_task_description_et);
-                Spinner tagSpinner = (Spinner) findViewById(R.id.new_task_tag_spinner);
-                DatePicker datePicker = (DatePicker) findViewById(R.id.new_task_datepicker);
-
                 String taskName = taskNameET.getText().toString();
                 if (taskName == null || taskName == "") {
                     Toast.makeText(getApplicationContext(), "Please enter a task name", Toast.LENGTH_SHORT).show();
@@ -80,7 +109,14 @@ public class NewTaskActivity extends MenuBarActivity {
                 TaskTag tag = (TaskTag)tagSpinner.getSelectedItem();
                 System.out.println("Grabbing selected tag from spinner in NewTaskActivity: Tag name: " + tag.name + ", Tag id: " + tag.id);
                 long tagId = ((TaskTag)tagSpinner.getSelectedItem()).id;
-                dbHelper.addTask(taskName, stringDate, taskDescription, NOT_COMPLETED, tagId);
+                if(!editing) {
+                    dbHelper.addTask(taskName, stringDate, taskDescription, NOT_COMPLETED, tagId);
+                }
+                else{
+                    Task toUpdate = new Task(taskName, stringDate, taskDescription, completed, tagId);
+                    toUpdate.setId(id);
+                    dbHelper.updateTask(toUpdate);
+                }
 
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);

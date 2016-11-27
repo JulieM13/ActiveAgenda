@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
             holder.checkBox = (CheckBox)row.findViewById(R.id.dayViewItemCheckbox);
             holder.taskName = (TextView)row.findViewById(R.id.dayViewItemTaskName);
             holder.taskDescription = (TextView)row.findViewById(R.id.dayViewItemTaskDescription);
+            holder.editButton = (ImageButton)row.findViewById(R.id.edit_task);
             row.setTag(holder);
         }
         else {
@@ -72,6 +74,21 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
             }
         });
 
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NewTaskActivity.class);
+                intent.putExtra("NAME", curTask.name);
+                intent.putExtra("DESCRIPTION", curTask.description);
+                intent.putExtra("TAGID", curTask.tagId);
+                intent.putExtra("DATE", curTask.dueDate);
+                intent.putExtra("ID", curTask.id);
+                intent.putExtra("COMPLETED", curTask.isCompleted);
+                System.out.println("EDITING TASK: " + curTask.name);
+                getContext().startActivity(intent);
+            }
+        });
+
         return row;
     }
 
@@ -89,6 +106,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         CheckBox checkBox;
         TextView taskName;
         TextView taskDescription;
+        ImageButton editButton;
     }
 
     public void updateTasks(List<Task> tasks){
