@@ -2,7 +2,6 @@ package com.example.android.activeagenda;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 public class ViewTaskActivity extends MenuBarActivity {
@@ -37,16 +36,5 @@ public class ViewTaskActivity extends MenuBarActivity {
         System.out.println("VIEW-TASK-ACTIVITY: tag id: " + data.getLong("TAG_ID"));
         String tagName = dbHelper.getTag(data.getLong("TAG_ID")).name;
         taskTagNameTV.setText("Tag: " + tagName);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-
-        return(super.onOptionsItemSelected(item));
     }
 }

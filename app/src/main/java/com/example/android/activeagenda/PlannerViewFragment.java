@@ -112,7 +112,7 @@ public class PlannerViewFragment extends Fragment {
                         getContext().startActivity(intent);
                     }
                 });
-
+                
                 ImageButton edit = (ImageButton)rowItem.findViewById(R.id.edit_task);
                 edit.setOnClickListener(new View.OnClickListener() {
                     @Override

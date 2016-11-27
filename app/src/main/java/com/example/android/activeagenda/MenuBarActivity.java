@@ -31,13 +31,17 @@ public class MenuBarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.action_manage_tags:
-                intent = new Intent(this, ManageTagsActivity.class);
-                startActivity(intent);
+            case android.R.id.home:
+                onBackPressed();
                 return true;
 
             case R.id.action_export_tasks_to_phone_cal:
                 exportAllTasksToCalendar();
+                return true;
+
+            case R.id.action_tag_view:
+                intent = new Intent(this, TagViewActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_day_view:
@@ -47,6 +51,11 @@ public class MenuBarActivity extends AppCompatActivity {
 
             case R.id.action_planner_view:
                 intent = new Intent(this, PlannerViewActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_manage_tags:
+                intent = new Intent(this, ManageTagsActivity.class);
                 startActivity(intent);
                 return true;
 
