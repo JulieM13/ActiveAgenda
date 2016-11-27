@@ -119,13 +119,9 @@ public class DayViewActivity extends MenuBarActivity {
     @Override
     // We come back from the create new task dialog
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("Returned");
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 allTasks = dbHelper.getAllTasks(curDate);
-                for(Task task: allTasks){
-                    System.out.println(task.name + "\n" + task.description);
-                }
                 adapter.updateTasks(allTasks);
             }
         }

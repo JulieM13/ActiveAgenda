@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
 /**
  * Created by Julie on 10/26/2016.
  */
@@ -87,7 +88,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
                 intent.putExtra("ID", curTask.id);
                 intent.putExtra("COMPLETED", curTask.isCompleted);
                 System.out.println("EDITING TASK: " + curTask.name);
-                getContext().startActivity(intent);
+                ((Activity) getContext()).startActivityForResult(intent,1);
             }
         });
 

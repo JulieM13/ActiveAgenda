@@ -114,20 +114,21 @@ public class PlannerViewFragment extends Fragment {
                 });
 
                 ImageButton edit = (ImageButton)rowItem.findViewById(R.id.edit_task);
-                edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), NewTaskActivity.class);
-                        intent.putExtra("NAME", curTask.name);
-                        intent.putExtra("DESCRIPTION", curTask.description);
-                        intent.putExtra("TAGID", curTask.tagId);
-                        intent.putExtra("DATE", curTask.dueDate);
-                        intent.putExtra("ID", curTask.id);
-                        intent.putExtra("COMPLETED", curTask.isCompleted);
-                        System.out.println("EDITING TASK: " + curTask.name);
-                        getContext().startActivity(intent);
-                    }
-                });
+                edit.setVisibility(View.INVISIBLE);
+//                edit.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent intent = new Intent(getContext(), NewTaskActivity.class);
+//                        intent.putExtra("NAME", curTask.name);
+//                        intent.putExtra("DESCRIPTION", curTask.description);
+//                        intent.putExtra("TAGID", curTask.tagId);
+//                        intent.putExtra("DATE", curTask.dueDate);
+//                        intent.putExtra("ID", curTask.id);
+//                        intent.putExtra("COMPLETED", curTask.isCompleted);
+//                        System.out.println("EDITING TASK: " + curTask.name);
+//                        getContext().startActivity(intent);
+//                    }
+//                });
 
                 dayLayout.addView(rowItem);
             }
