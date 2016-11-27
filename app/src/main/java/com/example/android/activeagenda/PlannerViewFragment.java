@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -108,6 +109,23 @@ public class PlannerViewFragment extends Fragment {
                         intent.putExtra("TASK_DUE_DATE", curTask.dueDate);
                         intent.putExtra("TAG_ID", curTask.tagId);
                         System.out.println("DAY-VIEW-ADAPTER: tag id: " + curTask.tagId);
+                        getContext().startActivity(intent);
+                    }
+                });
+
+                // Clicking on the pencil icon by a task will let you edit the task
+                ImageButton editTaskButton = (ImageButton) rowItem.findViewById(R.id.edit_task);
+                editTaskButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getContext(), NewTaskActivity.class);
+                        intent.putExtra("NAME", curTask.name);
+                        intent.putExtra("DESCRIPTION", curTask.description);
+                        intent.putExtra("TAGID", curTask.tagId);
+                        intent.putExtra("DATE", curTask.dueDate);
+                        intent.putExtra("ID", curTask.id);
+                        intent.putExtra("COMPLETED", curTask.isCompleted);
+                        System.out.println("EDITING TASK: " + curTask.name);
                         getContext().startActivity(intent);
                     }
                 });

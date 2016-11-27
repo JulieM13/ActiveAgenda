@@ -61,6 +61,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);
 
+        // Clicking on a task will let you view the task
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +75,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
             }
         });
 
+        // Clicking on the pencil icon by a task will let you edit the task
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
