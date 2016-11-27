@@ -130,16 +130,17 @@ public class DBHelper extends SQLiteOpenHelper {
         String date = task.dueDate;
         long tagId = task.tagId;
 
-        String updateString = "UPDATE " + TASKS_TABLE_NAME +
-                " SET " + TASKS_TITLE_COL + "=?, " +
-                TASKS_DESCRIPTION_COL + "=?, " +
-                TASKS_DATE_COL + "=?, " +
-                TASKS_COMPLETED_COL + "=" + completed + ", " +
-                TASKS_TAGID_COL + "=" + tagId +
-                " WHERE " + ID_COL + "=" + id;
+        ContentValues values = new ContentValues();
+        values.put(TASKS_TITLE_COL, name);
+        values.put(TASKS_DATE_COL, date);
+        values.put(TASKS_DESCRIPTION_COL, description);
+        values.put(TASKS_COMPLETED_COL, completed);
+        values.put(TASKS_TAGID_COL, tagId);
 
-        db.rawQuery(updateString, new String[]{name, description, date});
-        System.out.println("UPDATING TASK " + id + " with name: "+ name + " and description " + description);
+        String strFilter = "_id=" + id;
+
+        int updated = db.update(TASKS_TABLE_NAME, values, strFilter, null);
+        System.out.println("UPDATING TASK " + id + " with name: "+ name + " and description " + description + "did it update? = " + updated);
     }
 
     public void deleteAllTasksFromDB() {
@@ -172,10 +173,13 @@ public class DBHelper extends SQLiteOpenHelper {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         String stringDate = formatter.format(date);
         List<Task> allTasks = new ArrayList<>();
-        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, TASKS_DATE_COL + " = ?", new String[]{stringDate}, null, null, null);
+        String[] cols = Arrays.copyOf(ALL_TASKS_COLS, ALL_TASKS_COLS.length + 1);
+        cols[cols.length -1] = ID_COL;
+        Cursor cursor = db.query(TASKS_TABLE_NAME, cols, TASKS_DATE_COL + " = ?", new String[]{stringDate}, null, null, null);
         cursor.moveToFirst();
+        System.out.println(cursor);
         while (!cursor.isAfterLast()) {
-            Task task = cursorToTask(cursor);
+            Task task = cursorToTaskWithId(cursor);
             allTasks.add(task);
             cursor.moveToNext();
         }
@@ -215,6 +219,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getString(2),        // description
                 (cursor.getInt(3) != 0),    // completed
                 cursor.getLong(4));         // tagId
+        return task;
+    }
+
+    private Task cursorToTaskWithId(Cursor cursor){
+        Task task = cursorToTask(cursor);
+        task.setId(cursor.getLong(5));
         return task;
     }
 

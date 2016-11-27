@@ -112,8 +112,9 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
     }
 
     public void updateTasks(List<Task> tasks){
-        this.allTasks = tasks;
-        notifyDataSetChanged();
+        allTasks.clear();
+        allTasks.addAll(tasks);
+        this.notifyDataSetChanged();
     }
 
 
