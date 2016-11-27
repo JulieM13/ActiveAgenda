@@ -29,15 +29,25 @@ public class MenuBarActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_manage_tags:
-                Intent intent = new Intent(this, ManageTagsActivity.class);
+                intent = new Intent(this, ManageTagsActivity.class);
                 startActivity(intent);
                 return true;
 
             case R.id.action_export_tasks_to_phone_cal:
                 exportAllTasksToCalendar();
+                return true;
+
+            case R.id.action_day_view:
+                intent = new Intent(this, DayViewActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.action_planner_view:
+                intent = new Intent(this, PlannerViewActivity.class);
+                startActivity(intent);
                 return true;
 
             default:

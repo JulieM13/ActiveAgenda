@@ -3,6 +3,7 @@ package com.example.android.activeagenda;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -67,6 +69,7 @@ public class PlannerViewFragment extends Fragment {
             // Set a TextView to show a date
             TextView dateTV = new TextView(curActivity);
             dateTV.setText(DateFormat.getDateInstance().format(nextDate));
+            dateTV.setTextSize(25);
             dateTV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,6 +81,10 @@ public class PlannerViewFragment extends Fragment {
                 }
             });
             dayLayout.addView(dateTV);
+            View line = new View(curActivity);
+            line.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1, 1f));
+            line.setBackgroundColor(Color.DKGRAY);
+            dayLayout.addView(line);
 
             // Get all the tasks for this day, and add a row item for each task
             allTasks = dbHelper.getAllTasks(nextDate);

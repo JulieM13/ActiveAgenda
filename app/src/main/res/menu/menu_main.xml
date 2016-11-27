@@ -9,12 +9,22 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_export_tasks_to_phone_cal"
-        android:orderInCategory="100"
+        android:orderInCategory="10"
         android:title="Export to Calendar"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_planner_view"
+        android:orderInCategory="90"
+        android:title="Planner"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_day_view"
+        android:orderInCategory="80"
+        android:title="Today"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_tag_view"
+        android:orderInCategory="70"
+        android:title="Tasks for Tags"
+        app:showAsAction="never"/>
 </menu>
