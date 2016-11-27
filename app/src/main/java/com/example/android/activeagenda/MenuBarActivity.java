@@ -31,6 +31,10 @@ public class MenuBarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
             case R.id.action_manage_tags:
                 intent = new Intent(this, ManageTagsActivity.class);
                 startActivity(intent);
