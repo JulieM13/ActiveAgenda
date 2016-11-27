@@ -86,9 +86,6 @@ public class NewTaskActivity extends MenuBarActivity {
 
 
         Button createNewTaskBtn = (Button) findViewById(R.id.create_new_task_btn);
-        if(editing){
-            createNewTaskBtn.setText("SAVE");
-        }
         createNewTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,9 +102,7 @@ public class NewTaskActivity extends MenuBarActivity {
                 Format formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String stringDate = formatter.format(date);
 
-                // TODO: actually get tagId
                 TaskTag tag = (TaskTag)tagSpinner.getSelectedItem();
-                System.out.println("Grabbing selected tag from spinner in NewTaskActivity: Tag name: " + tag.name + ", Tag id: " + tag.id);
                 long tagId = ((TaskTag)tagSpinner.getSelectedItem()).id;
                 if(!editing) {
                     dbHelper.addTask(taskName, stringDate, taskDescription, NOT_COMPLETED, tagId);
@@ -123,5 +118,8 @@ public class NewTaskActivity extends MenuBarActivity {
                 finish();
             }
         });
+        if(editing){
+            createNewTaskBtn.setText("SAVE");
+        }
     }
 }
