@@ -29,6 +29,7 @@ public class PlannerViewFragment extends Fragment {
     private Date curDate;
     private String curDateString;
     private Format formatter;
+    private long tagIdToFilterBy = -1;
 
 
     public PlannerViewFragment() {
@@ -46,6 +47,16 @@ public class PlannerViewFragment extends Fragment {
         Activity curActivity = getActivity();
         dbHelper = new DBHelper(curActivity.getApplicationContext());
 
+        // Get which tag id to filter by - and id of -1 means no filter, display all tags
+        if (savedInstanceState != null) {
+            tagIdToFilterBy = savedInstanceState.getLong("SELECTED_TAG_ID", -1);
+        }
+        else {
+            tagIdToFilterBy = curActivity.getIntent().getLongExtra("SELECTED_TAG_ID", -1);
+        }
+
+        System.out.println("Tag to filter by is: " + tagIdToFilterBy);
+
         LinearLayout layout = new LinearLayout(curActivity);
         layout.removeAllViews();
         layout.setOrientation(OrientationHelper.VERTICAL);
@@ -59,6 +70,7 @@ public class PlannerViewFragment extends Fragment {
         final int DAYS_IN_PLANNER = 7;
         for( int day = 0; day < DAYS_IN_PLANNER; day++ ) {
 
+            // Create a layout for this day
             LinearLayout dayLayout = new LinearLayout(curActivity);
             dayLayout.removeAllViews();
             dayLayout.setOrientation(OrientationHelper.VERTICAL);
@@ -68,11 +80,11 @@ public class PlannerViewFragment extends Fragment {
             c.add(Calendar.DATE, day);
             final Date nextDate = c.getTime();
 
-            // Set a TextView to show a date
+            // Set a TextView to show the date
             TextView dateTV = new TextView(curActivity);
             dateTV.setText(DateFormat.getDateInstance().format(nextDate));
             dateTV.setTextSize(25);
-            dateTV.setOnClickListener(new View.OnClickListener() {
+            dateTV.setOnClickListener(new View.OnClickListener() { //clicking date brings you to DayView
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getContext(), DayViewActivity.class);
@@ -91,31 +103,35 @@ public class PlannerViewFragment extends Fragment {
             // Get all the tasks for this day, and add a row item for each task
             allTasks = dbHelper.getAllTasks(nextDate);
             for(final Task curTask : allTasks) {
-                View rowItem = inflater.inflate(R.layout.day_view_item, null);
 
-                CheckBox box = (CheckBox)rowItem.findViewById(R.id.dayViewItemCheckbox);
-                box.setChecked(curTask.isCompleted);
-                TextView name = (TextView)rowItem.findViewById(R.id.dayViewItemTaskName);
-                name.setText(curTask.name);
-                TextView description = (TextView)rowItem.findViewById(R.id.dayViewItemTaskDescription);
-                description.setText(curTask.description);
+                // Only add the task if we want to see all tasks, or if this task has the desired tag
+                if (tagIdToFilterBy == -1 || curTask.tagId == tagIdToFilterBy) {
+                    View rowItem = inflater.inflate(R.layout.day_view_item, null);
 
-                // Clicking a task will bring you to ViewTask
-                rowItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getContext(), ViewTaskActivity.class);
-                        intent.putExtra("TASK_NAME", curTask.name);
-                        intent.putExtra("TASK_DESCRIPTION", curTask.description);
-                        intent.putExtra("TASK_DUE_DATE", curTask.dueDate);
-                        intent.putExtra("TAG_ID", curTask.tagId);
-                        System.out.println("DAY-VIEW-ADAPTER: tag id: " + curTask.tagId);
-                        getContext().startActivity(intent);
-                    }
-                });
+                    CheckBox box = (CheckBox) rowItem.findViewById(R.id.dayViewItemCheckbox);
+                    box.setChecked(curTask.isCompleted);
+                    TextView name = (TextView) rowItem.findViewById(R.id.dayViewItemTaskName);
+                    name.setText(curTask.name);
+                    TextView description = (TextView) rowItem.findViewById(R.id.dayViewItemTaskDescription);
+                    description.setText(curTask.description);
 
-                ImageButton edit = (ImageButton)rowItem.findViewById(R.id.edit_task);
-                edit.setVisibility(View.INVISIBLE);
+                    // Clicking a task will bring you to ViewTask
+                    rowItem.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getContext(), ViewTaskActivity.class);
+                            intent.putExtra("TASK_NAME", curTask.name);
+                            intent.putExtra("TASK_DESCRIPTION", curTask.description);
+                            intent.putExtra("TASK_DUE_DATE", curTask.dueDate);
+                            intent.putExtra("TAG_ID", curTask.tagId);
+                            System.out.println("DAY-VIEW-ADAPTER: tag id: " + curTask.tagId);
+                            getContext().startActivity(intent);
+                        }
+                    });
+
+                    ImageButton edit = (ImageButton) rowItem.findViewById(R.id.edit_task);
+                    edit.setVisibility(View.INVISIBLE);
+
 //                edit.setOnClickListener(new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View view) {
@@ -131,9 +147,9 @@ public class PlannerViewFragment extends Fragment {
 //                    }
 //                });
 
-                dayLayout.addView(rowItem);
-            }
-
+                    dayLayout.addView(rowItem);
+                } // Close tag id filter if statement
+            } // Close days for loop
 
 
             // Add blank divider between days

@@ -1,6 +1,7 @@
 package com.example.android.activeagenda;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
             holder = (ManageTagsAdapter.TagHolder)row.getTag();
         }
 
-        TaskTag curTag = allTags.get(position);;
+        final TaskTag curTag = allTags.get(position);;
         holder.tagName.setText(curTag.name);
         holder.background.setBackgroundColor(curTag.color);
 
@@ -56,6 +57,16 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
         } else{
             holder.tagName.setTextColor(Color.WHITE);
         }
+
+        // Clicking on a Tag pulls up the PlannerView with only tasks from that tag showing
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), PlannerViewActivity.class);
+                intent.putExtra("SELECTED_TAG_ID", curTag.id);
+                getContext().startActivity(intent);
+            }
+        });
 
         return row;
     }
