@@ -126,4 +126,11 @@ public class DayViewActivity extends MenuBarActivity {
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        allTasks = dbHelper.getAllTasks(curDate);
+        adapter.updateTasks(allTasks);
+    }
 }
