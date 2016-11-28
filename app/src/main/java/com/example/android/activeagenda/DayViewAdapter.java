@@ -3,12 +3,16 @@ package com.example.android.activeagenda;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,12 +26,14 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
     Context context;
     int layoutResourceId;
     List<Task> allTasks;
+    DBHelper db;
 
     public DayViewAdapter(Context context, int layoutResourceId, List<Task> data) {
         super(context, layoutResourceId, data);
         this.context = context;
         this.layoutResourceId = layoutResourceId;
         this.allTasks = data;
+        db = new DBHelper(getContext());
     }
 
     @Override
@@ -44,6 +50,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
             holder.taskName = (TextView)row.findViewById(R.id.dayViewItemTaskName);
             holder.taskDescription = (TextView)row.findViewById(R.id.dayViewItemTaskDescription);
             holder.editButton = (ImageButton)row.findViewById(R.id.edit_task);
+            holder.background = (RelativeLayout)row.findViewById(R.id.item);
             row.setTag(holder);
         }
         else {
@@ -51,14 +58,30 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         }
 
         final Task curTask = allTasks.get(position);
-        holder.checkBox.setChecked(curTask.isCompleted);
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+        final TaskTag tag= db.getTag(curTask.tagId);
+
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][] {
+                        new int[] { -android.R.attr.state_checked }, // unchecked
+                        new int[] {  android.R.attr.state_checked }  // checked
+                },
+                new int[] {
+                        Color.DKGRAY,
+                        tag.color
+                }
+        );
+        holder.checkBox.setButtonTintList(colorStateList);
+
+        holder.checkBox.setHighlightColor(tag.color);
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                curTask.isCompleted = !curTask.isCompleted;
-                //TODO: update in DB
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //do stuff
+                curTask.isCompleted = isChecked;
+                db.updateTask(curTask);
             }
         });
+        holder.checkBox.setChecked(curTask.isCompleted);
         holder.taskName.setText(curTask.name);
         holder.taskDescription.setText(curTask.description);
 
@@ -95,6 +118,16 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         return row;
     }
 
+    private boolean isDarkColor(int color){
+        //http://stackoverflow.com/questions/24260853/check-if-color-is-dark-or-light-in-android
+        double darkness = 1-(0.299* Color.red(color) + 0.587*Color.green(color) + 0.114*Color.blue(color))/255;
+        if(darkness<0.5){
+            return false; // It's a light color
+        }else{
+            return true; // It's a dark color
+        }
+    }
+
     @Override
     public int getCount() {
         return allTasks.size();
@@ -110,6 +143,7 @@ public class DayViewAdapter extends ArrayAdapter<Task> {
         TextView taskName;
         TextView taskDescription;
         ImageButton editButton;
+        RelativeLayout background;
     }
 
     public void updateTasks(List<Task> tasks){

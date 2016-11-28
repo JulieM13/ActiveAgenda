@@ -45,7 +45,6 @@ public class TagSpinnerAdapter extends ArrayAdapter<TaskTag> {
         }
 
         TaskTag curTag = allTags.get(position);
-        System.out.println("Tag id in spinner: " + curTag.id);
         holder.taskName.setText(curTag.name);
 
         return row;

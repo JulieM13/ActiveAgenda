@@ -58,6 +58,7 @@ public class NewTaskActivity extends MenuBarActivity {
         if(extras.getString("NAME")!=null){
             editing = true; //we have to have a name
             taskNameET.setText(extras.getString("NAME"));
+            //This doesn't work vvvvv
             tagSpinner.setSelection((int)extras.getLong("TAGID"));
             id = extras.getLong("ID");
             completed = extras.getBoolean("COMPLETED");

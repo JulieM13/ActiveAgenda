@@ -149,7 +149,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public List<Task> getAllTasks() {
         List<Task> allTasks = new ArrayList<>();
-        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, null, null, null, null, null);
+        Cursor cursor = db.query(TASKS_TABLE_NAME, ALL_TASKS_COLS, null, null, null, null, TASKS_COMPLETED_COL);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
@@ -160,22 +160,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return allTasks;
     }
 
-    public void setCompleted(Task task){
-        //update a tasks completion boolean
-        //I went with rawquery here since it was a lot simpler for me to wrap my mind around
-        //if you'd like to see more examples to refactor: http://stackoverflow.com/questions/5987863/android-sqlite-update-statement
-        int completed = task.isCompleted ? 1 : 0;
-        String query = "UPDATE " + TASKS_TABLE_NAME + " SET " + TASKS_COMPLETED_COL + "=? WHERE " +ID_COL + "=?";
-        db.rawQuery(query, new String[]{String.valueOf(completed), String.valueOf(task.id)});
-    }
-
     public List<Task> getAllTasks(Date date) {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd");
         String stringDate = formatter.format(date);
         List<Task> allTasks = new ArrayList<>();
         String[] cols = Arrays.copyOf(ALL_TASKS_COLS, ALL_TASKS_COLS.length + 1);
         cols[cols.length -1] = ID_COL;
-        Cursor cursor = db.query(TASKS_TABLE_NAME, cols, TASKS_DATE_COL + " = ?", new String[]{stringDate}, null, null, null);
+        Cursor cursor = db.query(TASKS_TABLE_NAME, cols, TASKS_DATE_COL + " = ?", new String[]{stringDate}, null, null, TASKS_COMPLETED_COL);
         cursor.moveToFirst();
         System.out.println(cursor);
         while (!cursor.isAfterLast()) {
@@ -274,11 +265,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public List<TaskTag> getAllTags() {
         List<TaskTag> allTags = new ArrayList<>();
-        Cursor cursor = db.query(TAGS_TABLE_NAME, ALL_TAG_COLS, null, null, null, null, null);
+        String[] cols = Arrays.copyOf(ALL_TAG_COLS, ALL_TAG_COLS.length + 1);
+        cols[cols.length -1] = ID_COL;
+        Cursor cursor = db.query(TAGS_TABLE_NAME, cols, null, null, null, null, null);
         cursor.moveToFirst();
         int idIndex = 1;
         while (!cursor.isAfterLast()) {
-            TaskTag tag = cursorToTaskTag(cursor);
+            TaskTag tag = cursorToTaskTagWithId(cursor);
             tag.setId(idIndex);
             allTags.add(tag);
             cursor.moveToNext();
@@ -310,6 +303,12 @@ public class DBHelper extends SQLiteOpenHelper {
         TaskTag tag = new TaskTag(
                 cursor.getString(0),        // name
                 cursor.getInt(1)); // color
+        return tag;
+    }
+
+    private TaskTag cursorToTaskTagWithId(Cursor cursor){
+        TaskTag tag = cursorToTaskTag(cursor);
+        tag.setId(cursor.getLong(2));
         return tag;
     }
 
