@@ -137,10 +137,21 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(TASKS_COMPLETED_COL, completed);
         values.put(TASKS_TAGID_COL, tagId);
 
-        String strFilter = "_id=" + id;
+        String strFilter = ID_COL + "=" + id;
 
         int updated = db.update(TASKS_TABLE_NAME, values, strFilter, null);
         System.out.println("UPDATING TASK " + id + " with name: "+ name + " and description " + description + "did it update? = " + updated);
+    }
+
+    public void updateTag(TaskTag tag){
+        ContentValues values = new ContentValues();
+        values.put(TAGS_NAME_COL, tag.name);
+        values.put(TAGS_COLOR_COL, tag.color);
+        String strFilter = ID_COL + "=" + tag.id;
+
+        int updated = db.update(TAGS_TABLE_NAME, values, strFilter, null);
+        System.out.println("UPDATING TAG " + tag.id + " with name: "+ tag.name + " and color " + tag.color + "did it update? = " + updated);
+
     }
 
     public void deleteAllTasksFromDB() {

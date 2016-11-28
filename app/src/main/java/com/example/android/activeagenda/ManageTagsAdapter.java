@@ -1,12 +1,15 @@
 package com.example.android.activeagenda;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,6 +44,7 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
 
             holder.tagName = (TextView)row.findViewById(R.id.manageTagsItemTagName);
             holder.background = (LinearLayout)row.findViewById(R.id.background);
+            holder.edit = (ImageButton)row.findViewById(R.id.edit_tag);
 
             row.setTag(holder);
         }
@@ -50,7 +54,18 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
 
         final TaskTag curTag = allTags.get(position);;
         holder.tagName.setText(curTag.name);
-        holder.background.setBackgroundColor(curTag.color);
+        holder.background.setBackground(new ColorDrawable(curTag.color));
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NewTagActivity.class);
+                intent.putExtra("NAME", curTag.name);
+                intent.putExtra("COLOR", curTag.color);
+                intent.putExtra("ID", curTag.id);
+                ((Activity) getContext()).startActivityForResult(intent,1);
+            }
+        });
 
         if(!isDarkColor(curTag.color)){
             holder.tagName.setTextColor(Color.BLACK);
@@ -84,6 +99,7 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
     static class TagHolder {
         TextView tagName;
         LinearLayout background;
+        ImageButton edit;
     }
 
     public void updateTags(List<TaskTag> tags){
