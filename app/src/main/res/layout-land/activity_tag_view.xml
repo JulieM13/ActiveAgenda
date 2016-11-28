@@ -17,10 +17,16 @@
         android:layout_weight="0.3"
         android:layout_height="match_parent" />
 
+    <!-- Empty TextView for padding between fragments -->
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1"/>
+
     <fragment android:name="com.example.android.activeagenda.PlannerViewFragment"
         android:id="@+id/land_tag_view_planner_fragment"
         android:layout_width="0dp"
-        android:layout_weight="0.7"
+        android:layout_weight="0.6"
         android:layout_height="match_parent" />
 
 </LinearLayout>

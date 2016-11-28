@@ -13,7 +13,8 @@
             android:id="@+id/manageTagsItemTagName"
             android:text="TAG NAME"
             android:textSize="24dp"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:gravity="center"/>
 
     </LinearLayout>
 

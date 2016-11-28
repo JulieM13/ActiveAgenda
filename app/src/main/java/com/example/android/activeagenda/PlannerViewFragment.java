@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -141,7 +142,11 @@ public class PlannerViewFragment extends Fragment {
             layout.addView(dayLayout);
         }
 
-        return layout;
+        // Make the fake ListView scrollable
+        ScrollView scrollView = new ScrollView(getContext());
+        scrollView.removeAllViews();;
+        scrollView.addView(layout);
+        return scrollView;
     }
 
 }
