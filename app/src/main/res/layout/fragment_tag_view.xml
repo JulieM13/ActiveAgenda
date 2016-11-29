@@ -6,8 +6,9 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Welcome to the Tag View Fragment!" />
+        android:layout_height="wrap_content"
+        android:id="@+id/planner_fragment_filter_notification"
+        android:text="Display Tasks for the tag ..."/>
 
     <ListView
         android:layout_width="match_parent"

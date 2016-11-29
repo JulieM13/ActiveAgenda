@@ -1,5 +1,6 @@
 package com.example.android.activeagenda;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -36,8 +37,16 @@ public class PlannerViewFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static PlannerViewFragment newInstance() {
-       return new PlannerViewFragment();
+    public static PlannerViewFragment newInstance(long tagFilterId) {
+        PlannerViewFragment fragment = new PlannerViewFragment();
+        Bundle args = new Bundle();
+        args.putLong("SELECTED_TAG_ID", tagFilterId);
+        fragment.setArguments(args);
+       return fragment;
+    }
+
+    public long getShownIndex() {
+        return getArguments().getLong("SELECTED_TAG_ID", -1);
     }
 
     @Override
@@ -47,12 +56,11 @@ public class PlannerViewFragment extends Fragment {
         Activity curActivity = getActivity();
         dbHelper = new DBHelper(curActivity.getApplicationContext());
 
-        // Get which tag id to filter by - and id of -1 means no filter, display all tags
         if (savedInstanceState != null) {
-            tagIdToFilterBy = savedInstanceState.getLong("SELECTED_TAG_ID", -1);
+            tagIdToFilterBy = savedInstanceState.getLong("SELECTED_TAG_ID");
         }
-        else {
-            tagIdToFilterBy = curActivity.getIntent().getLongExtra("SELECTED_TAG_ID", -1);
+        else if (getArguments() != null ) {
+            tagIdToFilterBy = getArguments().getLong("SELECTED_TAG_ID");
         }
 
         System.out.println("Tag to filter by is: " + tagIdToFilterBy);
@@ -60,6 +68,8 @@ public class PlannerViewFragment extends Fragment {
         LinearLayout layout = new LinearLayout(curActivity);
         layout.removeAllViews();
         layout.setOrientation(OrientationHelper.VERTICAL);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
 
         curDate = new Date();
         formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -162,7 +172,12 @@ public class PlannerViewFragment extends Fragment {
         ScrollView scrollView = new ScrollView(getContext());
         scrollView.removeAllViews();;
         scrollView.addView(layout);
-        return scrollView;
+
+        // Add scrollView into LinearLayout to stop crashing? "ScrollView can host only one direct child"
+        LinearLayout bigPapa = new LinearLayout(curActivity);
+        bigPapa.removeAllViews();
+        bigPapa.addView(scrollView);
+        return bigPapa;
     }
 
 }

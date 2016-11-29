@@ -2,6 +2,7 @@ package com.example.android.activeagenda;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,9 +63,28 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PlannerViewActivity.class);
-                intent.putExtra("SELECTED_TAG_ID", curTag.id);
-                getContext().startActivity(intent);
+                // If we're in Portrait mode, just launch a new PlannerView
+                if (getContext().getResources().getConfiguration().orientation
+                        == Configuration.ORIENTATION_PORTRAIT) {
+                    Intent intent = new Intent(getContext(), PlannerViewActivity.class);
+                    intent.putExtra("SELECTED_TAG_ID", curTag.id);
+                    System.out.println("MANAGE_TAGS_ADAPTER: curtagid: " + curTag.id);
+                    getContext().startActivity(intent);
+                }
+//              else {
+//                    // If we're in landscape, update the PlannerView to filter
+//                    PlannerViewFragment plannerFragment = new PlannerViewFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putLong("SELECTED_TAG_ID", curTag.id);
+//                    plannerFragment.setArguments(bundle);
+//
+//                    FragmentTransaction transaction = ((Activity)context).getFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.land_tag_view_planner_fragment, plannerFragment);
+//                    transaction.addToBackStack(null);
+//                    transaction.commit();
+//                }
+
+
             }
         });
 
