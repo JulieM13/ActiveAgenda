@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
@@ -14,8 +14,18 @@
             android:text="TAG NAME"
             android:textSize="24dp"
             android:layout_margin="10dp"
-            android:gravity="center"/>
-
+           />
     </LinearLayout>
 
-</LinearLayout>
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/edit_tag"
+        android:background="@null"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:src="@android:drawable/ic_menu_edit"
+        />
+
+</RelativeLayout>
