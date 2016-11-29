@@ -8,9 +8,11 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -29,8 +31,7 @@ import java.util.List;
 public class PlannerViewFragment extends Fragment {
     private DBHelper dbHelper;
     private List<Task> allTasks;
-    private Date curDate;
-    private String curDateString;
+    private Date curDate = new Date();
     private Format formatter;
     private long tagIdToFilterBy = -1;
 
@@ -52,7 +53,7 @@ public class PlannerViewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         Activity curActivity = getActivity();
         dbHelper = new DBHelper(curActivity.getApplicationContext());
@@ -64,17 +65,94 @@ public class PlannerViewFragment extends Fragment {
             tagIdToFilterBy = getArguments().getLong("SELECTED_TAG_ID");
         }
 
-        System.out.println("Tag to filter by is: " + tagIdToFilterBy);
-
         LinearLayout layout = new LinearLayout(curActivity);
         layout.removeAllViews();
         layout.setOrientation(OrientationHelper.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
 
-        curDate = new Date();
+        // Have arrows so the user can go to the previous and next week
+        LinearLayout titleAndNaviation = new LinearLayout(curActivity);
+        titleAndNaviation.setOrientation(OrientationHelper.HORIZONTAL);
+        titleAndNaviation.setPadding(20, 30, 20, 40);
+
+        // Prev week button
+        Button prevWeekBtn = new Button(curActivity);
+        prevWeekBtn.setText("<");
+        prevWeekBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked prev week!");
+                Calendar c = Calendar.getInstance();
+                c.setTime(curDate);
+                c.add(Calendar.DATE, -7);
+                Date nextDate = c.getTime();
+                curDate = nextDate;
+
+                PlannerViewFragment fragment = (PlannerViewFragment)getFragmentManager().findFragmentByTag("PLANNER_VIEW_FRAGMENT");
+                getFragmentManager().beginTransaction()
+                        .detach(fragment).attach(fragment).commit();
+            }
+        });
+        prevWeekBtn.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.1f));
+        titleAndNaviation.addView(prevWeekBtn);
+
+        // Simple title
+        TextView title = new TextView(curActivity);
+        title.setText("Week Ahead");
+        title.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.8f));
+        title.setTextSize(32);
+        title.setGravity(Gravity.CENTER);
+        titleAndNaviation.addView(title);
+
+        // Next week button
+        Button nextWeekBtn = new Button(curActivity);
+        nextWeekBtn.setText(">");
+        nextWeekBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Clicked next week!");
+                Calendar c = Calendar.getInstance();
+                c.setTime(curDate);
+                c.add(Calendar.DATE, 7);
+                Date nextDate = c.getTime();
+                curDate = nextDate;
+
+                PlannerViewFragment fragment = (PlannerViewFragment)getFragmentManager().findFragmentByTag("PLANNER_VIEW_FRAGMENT");
+                getFragmentManager().beginTransaction()
+                        .detach(fragment).attach(fragment).commit();
+            }
+        });
+        nextWeekBtn.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.1f));
+        titleAndNaviation.addView(nextWeekBtn);
+
+        layout.addView(titleAndNaviation);
+
+
+        // Notify the user of that tag filter
+        TextView filterText = new TextView(curActivity);
+        filterText.setGravity(Gravity.CENTER);
+        filterText.setTextSize(24);
+        filterText.setPadding(0, 10, 0, 40);
+        if (tagIdToFilterBy == -1) {
+            filterText.setText("No Tag Filtering");
+        }
+        else {
+            filterText.setText("Showing Tasks with \"" + dbHelper.getTag(tagIdToFilterBy).name+ "\" Tag");
+        }
+
+        layout.addView(filterText);
+
         formatter = new SimpleDateFormat("yyyy-MM-dd");
-        curDateString = formatter.format(curDate);
 
         Calendar c = Calendar.getInstance();
 

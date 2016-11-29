@@ -29,7 +29,7 @@ public class PlannerViewActivity extends MenuBarActivity {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 //        transaction.replace(R.id.planner_activity_planner_view_fragment, planner);
-        transaction.add(android.R.id.content, planner);
+        transaction.add(android.R.id.content, planner, "PLANNER_VIEW_FRAGMENT");
         transaction.commit();
 
     }

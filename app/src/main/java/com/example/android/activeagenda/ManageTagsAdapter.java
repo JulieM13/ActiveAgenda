@@ -96,12 +96,15 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
                     Bundle bundle = new Bundle();
                     bundle.putLong("SELECTED_TAG_ID", curTag.id);
                     plannerFragment.setArguments(bundle);
-                    
+
+                    // TODO: update the PlannerView Fragment
                     FragmentTransaction transaction = ((Activity)context).getFragmentManager().beginTransaction();
                     transaction.detach(plannerFragment);
                     transaction.attach(plannerFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
+
+                    System.out.println("MANAGE-TAGS-ADAPTER: starting fragment with filterId: " + plannerFragment.getArguments().getLong("SELECTED_TAG_ID"));
                 }
 
 
