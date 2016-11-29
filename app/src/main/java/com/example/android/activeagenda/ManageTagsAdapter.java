@@ -98,7 +98,8 @@ public class ManageTagsAdapter extends ArrayAdapter<TaskTag> {
                     plannerFragment.setArguments(bundle);
                     
                     FragmentTransaction transaction = ((Activity)context).getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.land_tag_view_planner_fragment, plannerFragment);
+                    transaction.detach(plannerFragment);
+                    transaction.attach(plannerFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }

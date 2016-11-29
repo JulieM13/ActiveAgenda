@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -52,7 +54,6 @@ public class PlannerViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         Activity curActivity = getActivity();
         dbHelper = new DBHelper(curActivity.getApplicationContext());
 
@@ -125,6 +126,27 @@ public class PlannerViewFragment extends Fragment {
                     TextView description = (TextView) rowItem.findViewById(R.id.dayViewItemTaskDescription);
                     description.setText(curTask.description);
 
+                    final TaskTag tag= dbHelper.getTag(curTask.tagId);
+
+                    ColorStateList colorStateList = new ColorStateList(
+                            new int[][] {
+                                    new int[] { -android.R.attr.state_checked }, // unchecked
+                                    new int[] {  android.R.attr.state_checked }  // checked
+                            },
+                            new int[] {
+                                    Color.DKGRAY,
+                                    tag.color
+                            }
+                    );
+                    box.setButtonTintList(colorStateList);
+                    box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            //do stuff
+                            curTask.isCompleted = isChecked;
+                            dbHelper.updateTask(curTask);
+                        }
+                    });
                     // Clicking a task will bring you to ViewTask
                     rowItem.setOnClickListener(new View.OnClickListener() {
                         @Override
