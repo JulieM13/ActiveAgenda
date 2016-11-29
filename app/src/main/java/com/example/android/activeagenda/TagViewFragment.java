@@ -55,6 +55,7 @@ public class TagViewFragment extends ListFragment {
         adapter = new ManageTagsAdapter(getContext(), R.layout.manage_tags_item, allTags);
         setListAdapter(adapter);
 
+
         if (savedInstanceState != null) {
             tagIdToFilterBy = savedInstanceState.getLong("SELECTED_TAG_ID", -1);
         }
@@ -79,6 +80,7 @@ public class TagViewFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id) {
+        System.out.println("TAG-VIEW-FRAGMENT: in onListItemClick");
         showPlanner(pos);
     }
 
