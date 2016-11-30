@@ -12,7 +12,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -77,8 +76,9 @@ public class PlannerViewFragment extends Fragment {
         titleAndNaviation.setPadding(20, 30, 20, 40);
 
         // Prev week button
-        Button prevWeekBtn = new Button(curActivity);
-        prevWeekBtn.setText("<");
+        ImageButton prevWeekBtn = new ImageButton(curActivity);
+        prevWeekBtn.setImageResource(R.drawable.arrow_left);
+        prevWeekBtn.setBackground(null);
         prevWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,11 +109,13 @@ public class PlannerViewFragment extends Fragment {
                 0.8f));
         title.setTextSize(32);
         title.setGravity(Gravity.CENTER);
+        title.setPadding(0, 15, 0, 0);
         titleAndNaviation.addView(title);
 
         // Next week button
-        Button nextWeekBtn = new Button(curActivity);
-        nextWeekBtn.setText(">");
+        ImageButton nextWeekBtn = new ImageButton(curActivity);
+        nextWeekBtn.setImageResource(R.drawable.arrow_right);
+        nextWeekBtn.setBackground(null);
         nextWeekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

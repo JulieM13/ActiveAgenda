@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -83,7 +84,7 @@ public class DayViewActivity extends MenuBarActivity {
             }
         });
 
-        Button prevDay = (Button) findViewById(R.id.day_view_decrease_date_btn);
+        ImageButton prevDay = (ImageButton) findViewById(R.id.day_view_decrease_date_btn);
         prevDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +96,7 @@ public class DayViewActivity extends MenuBarActivity {
             }
         });
 
-        final Button nextDay = (Button) findViewById(R.id.day_view_increase_date_btn);
+        final ImageButton nextDay = (ImageButton) findViewById(R.id.day_view_increase_date_btn);
         nextDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
