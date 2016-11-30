@@ -8,24 +8,25 @@
         android:id="@+id/background"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/manageTagsItemTagName"
             android:text="TAG NAME"
             android:textSize="24dp"
             android:layout_margin="10dp"
-           />
-    </LinearLayout>
+            android:layout_weight="0.9" />
 
-    <ImageButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/edit_tag"
-        android:background="@null"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
-        android:src="@android:drawable/ic_menu_edit"
-        />
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:id="@+id/edit_tag"
+            android:background="@null"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_menu_edit"
+            android:layout_weight="0.1"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
