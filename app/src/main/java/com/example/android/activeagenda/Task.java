@@ -10,15 +10,15 @@ public class Task {
     public String dueDate;
     public String description;
     public boolean isCompleted;
-    public TaskTag tag;
+    public long tagId;
 
 
-    public Task(String name, String dueDate, String description, boolean isCompleted, TaskTag tag) {
+    public Task(String name, String dueDate, String description, boolean isCompleted, long tagId) {
         this.name = name;
         this.dueDate = dueDate;
         this.description = (description == null) ? "" : description;
         this.isCompleted = isCompleted;
-        this.tag = tag;
+        this.tagId = tagId;
     }
 
     public void setId(long id){

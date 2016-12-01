@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class DayViewActivity extends AppCompatActivity {
+public class DayViewActivity extends MenuBarActivity {
     private DBHelper dbHelper;
     private List<Task> allTasks;
     private DayViewAdapter adapter;
@@ -39,15 +36,25 @@ public class DayViewActivity extends AppCompatActivity {
 
         dbHelper = new DBHelper(getApplicationContext());
 
-        // TODO: get actual date from previous activity
+        if (getIntent() != null ) {
+            Intent intent = getIntent();
+            if (intent.getExtras() != null) {
+                Bundle extras = intent.getExtras();
+                curDate = (Date)extras.getSerializable("CUR_DATE");
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        } else {
+            curDate = new Date();
+        }
+        if (curDate == null)
+            curDate = new Date();
+
         dateTV = (TextView) findViewById(R.id.day_view_date_tv);
-        curDate = new Date();
         dateTV.setText(DateFormat.getDateInstance().format(curDate));
 
         formatter = new SimpleDateFormat("yyyy-MM-dd");
         curDateString = formatter.format(curDate);
 
-        System.out.println("The current date is: " + curDateString);
         allTasks = dbHelper.getAllTasks(curDate);
         adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
         ListView listView = (ListView) findViewById(R.id.day_view_lv);
@@ -73,13 +80,11 @@ public class DayViewActivity extends AppCompatActivity {
                 dbHelper.deleteAllTasksFromDB();
 
                 allTasks = dbHelper.getAllTasks(curDate);
-                adapter = new DayViewAdapter(getApplicationContext(), R.layout.day_view_item, allTasks);
-                ListView listView = (ListView) findViewById(R.id.day_view_lv);
-                listView.setAdapter(adapter);
+                adapter.updateTasks(allTasks);
             }
         });
 
-        Button prevDay = (Button)findViewById(R.id.day_view_decrease_date_btn);
+        ImageButton prevDay = (ImageButton) findViewById(R.id.day_view_decrease_date_btn);
         prevDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +96,7 @@ public class DayViewActivity extends AppCompatActivity {
             }
         });
 
-        final Button nextDay = (Button)findViewById(R.id.day_view_increase_date_btn);
+        final ImageButton nextDay = (ImageButton) findViewById(R.id.day_view_increase_date_btn);
         nextDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,14 +107,9 @@ public class DayViewActivity extends AppCompatActivity {
                 updateDate(nextDate);
             }
         });
-
-
-
-        // TODO: Create onClick() for decrease data and increase data buttons
-
     }
 
-    private void updateDate(Date day){
+    private void updateDate(Date day) {
         curDate = day;
         curDateString = formatter.format(curDate);
         dateTV.setText(DateFormat.getDateInstance().format(curDate));
@@ -120,40 +120,18 @@ public class DayViewActivity extends AppCompatActivity {
     @Override
     // We come back from the create new task dialog
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("In onActivityResult");
         if (requestCode == 1) {
-            System.out.println("requestCode is 1");
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("resultCode is OK");
                 allTasks = dbHelper.getAllTasks(curDate);
-                adapter = new DayViewAdapter(this, R.layout.day_view_item, allTasks);
-                ListView listView = (ListView) findViewById(R.id.day_view_lv);
-                listView.setAdapter(adapter);
+                adapter.updateTasks(allTasks);
             }
         }
-
     }
 
     @Override
-    /* Create the overflow menu */
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onResume() {
+        super.onResume();
+        allTasks = dbHelper.getAllTasks(curDate);
+        adapter.updateTasks(allTasks);
     }
-
-    @Override
-    /* Set click actions of overflow menu options */
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_manage_tags:
-                Intent intent = new Intent(this, ManageTagsActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 }
