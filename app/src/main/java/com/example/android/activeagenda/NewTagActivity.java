@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
@@ -84,6 +85,10 @@ public class NewTagActivity extends MenuBarActivity {
             public void onClick(View view) {
                 EditText tagNameET = (EditText) findViewById(R.id.new_tag_tag_name_et);
                 String tagName = tagNameET.getText().toString();
+                if (tagName == null || tagName.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please enter a tag name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 color = Color.rgb(redValue, greenValue, blueValue);
 
                 if(!editing) {

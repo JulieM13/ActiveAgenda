@@ -3,7 +3,6 @@ package com.example.android.activeagenda;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -91,7 +90,7 @@ public class NewTaskActivity extends MenuBarActivity {
             @Override
             public void onClick(View view) {
                 String taskName = taskNameET.getText().toString();
-                if (taskName == null || taskName == "") {
+                if (taskName == null || taskName.equals("")) {
                     Toast.makeText(getApplicationContext(), "Please enter a task name", Toast.LENGTH_SHORT).show();
                     return;
                 }
