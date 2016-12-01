@@ -13,29 +13,40 @@
     tools:context="com.example.android.activeagenda.ManageTagsActivity"
     tools:showIn="@layout/activity_manage_tags">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/manage_tags_cur_tags_text"
-        android:text="Current Tags"
-        android:textSize="36dp"
-        android:layout_weight="0.8"
-        android:gravity="center"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:id="@+id/manage_tags_lv"
-        android:layout_below="@+id/manage_tags_cur_tags_text">
-    </ListView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/manage_tags_cur_tags_text"
+            android:text="Current Tags"
+            android:textSize="36dp"
+            android:layout_weight="0.1"
+            android:gravity="center"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/manage_tags_delete_all_tags_btn"
-        android:text="DELETE ALL TAGS"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/manage_tags_lv"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:layout_margin="15dp"
+            android:id="@+id/manage_tags_lv"
+            android:layout_below="@+id/manage_tags_cur_tags_text">
+        </ListView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:id="@+id/manage_tags_delete_all_tags_btn"
+            android:text="DELETE ALL TAGS"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/manage_tags_lv"/>
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>
