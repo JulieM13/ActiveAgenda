@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_view_task"
     android:layout_width="match_parent"
@@ -12,32 +12,85 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
+    <!-- Name -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="42dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/view_task_task_name"
-        android:textSize="36dp"/>
+        android:textSize="28dp"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"/>
 
+    <!-- Description -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:textSize="42dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/view_task_task_description"
-        android:layout_below="@id/view_task_task_name"
-        android:textSize="28dp"/>
+        android:gravity="center_horizontal"
+        android:textSize="28dp"
+        android:paddingBottom="10dp"/>
 
+    <!-- Due Date -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Due Date"
+        android:textSize="42dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/view_task_task_due_date"
-        android:layout_below="@id/view_task_task_description"
-        android:textSize="28dp"/>
+        android:gravity="center_horizontal"
+        android:textSize="28dp"
+        android:paddingBottom="10dp"/>
 
+    <!-- Tag -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tag"
+        android:textSize="42dp"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/view_task_task_tag_name"
-        android:layout_below="@id/view_task_task_due_date"
-        android:textSize="28dp"/>
+        android:gravity="center_horizontal"
+        android:textSize="28dp"
+        android:paddingBottom="10dp"/>
 
 
-</RelativeLayout>
+</LinearLayout>

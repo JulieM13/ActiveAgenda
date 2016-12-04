@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_9a57b51acf441afe64f5928cc21309e55e2e79a2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_ac074c24e9a5b286fc92440d81a3402eb30f4b02\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="8e673cdfadd8f2d98fdb2fda2285c30f6e449782">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.4.0_4f30ffaf1e120e0978534d33796460a3bab2b874\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.pes.materialcolorpicker\library\1.0.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="aab7640038c6153ac02d112584b8852a01794262">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.pes.materialcolorpicker-library-1.0.2_bfcea8e77ee6d52a44c9150b453064ab0b9bdff3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_cf42c4ecce239a90f17e2f42c865a58113e35b17\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_6a03d2e886cea6715eaac5c3df3692be731dff92\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_1fec55f43e67c2a2d0d6b552cda5df8423b595e3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_ab426f86e554b9dc6a47a3124bb2c7398244c36b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="63f120a91a577f4b9609d5ed1f12e3c6a9af045d">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_fdba463f8148ae124a653ba2ceb6e69c9a268c47\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_b81e80696d3a5d4f2124c5f075d91bd92c40b4f1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_fdc7ef1e25f9759cf735175ddff4c575cc99a858\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="65d086ee9daaf87b5af62ad24471edafa433354c">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.4.0_7a5f4c1a9bcc2ea6d6a40bd3e09dc93a421763ae\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.4.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="fef2b3e4b6b1b0e5fe7b69fa137a5fa55a3182ab">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-base-8.4.0_15ebaf057c4fc35f25b9da7196cdf8c190cf80d8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_8ece16764bcd9f6e030714623a555dfef2a667f1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_038b02f39943e837aabac9f80a49f25de243b2f0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="5fd2e41afa99fb90ed4c29e0d1a971792fdec63c">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_0271ad13dcee9811510ea0ef9693e9281d196bfb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_31b06313b57fa4bc19f401b440f215b3b283ab33\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_496e5dfd3a1c959fa757b67b7b63930a9541edd5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\design\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-24.2.1_732021091edc0fb1e195e995fa02ca0a38c6cbe4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_8657792ba6385ea5cb5efa37ac6e6baea09356a0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_e2632c95dee2b85920bde7d345aa919d5edf27bf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_a1e24aa8f19f8ab756c2768425c9cf0bd4958c75\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\Julie\Documents\GitHub\ActiveAgenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_279bb9a21b4a063b3c38cfc9648be2db79ed358b\classes.dex" />
+    </item>
+
+</items>
