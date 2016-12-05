@@ -102,7 +102,7 @@ public class PlannerViewFragment extends Fragment {
 
         // Simple title
         TextView title = new TextView(curActivity);
-        title.setText("Week Ahead");
+        title.setText("Weekly View");
         title.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,

@@ -1,6 +1,10 @@
 package com.example.android.activeagenda;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,10 +26,14 @@ public class DayViewActivity extends MenuBarActivity {
     private DBHelper dbHelper;
     private List<Task> allTasks;
     private DayViewAdapter adapter;
-    private Date curDate;
+    public Date curDate;
     private String curDateString;
     private Format formatter;
     private TextView dateTV;
+
+    // For notifications
+    NotificationManager notificationManager;
+    int notificationID = 333;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,7 @@ public class DayViewActivity extends MenuBarActivity {
         setContentView(R.layout.activity_day_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dbHelper = new DBHelper(getApplicationContext());
 
@@ -107,6 +116,8 @@ public class DayViewActivity extends MenuBarActivity {
                 updateDate(nextDate);
             }
         });
+
+        showNotification(findViewById(R.id.content_day_view));
     }
 
     private void updateDate(Date day) {
@@ -116,6 +127,22 @@ public class DayViewActivity extends MenuBarActivity {
         allTasks = dbHelper.getAllTasks(curDate);
         adapter.updateTasks(allTasks);
     }
+
+    public void showNotification(View view) {
+        // TODO: change the time for the demo
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 20);
+        cal.set(Calendar.MINUTE, 35);
+        cal.set(Calendar.SECOND, 00);
+
+        Intent alertIntent = new Intent(this, AlarmReciever.class);
+        alertIntent.putExtra("CUR_DATE", curDate);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), PendingIntent.getBroadcast(this, 1, alertIntent, PendingIntent.FLAG_ONE_SHOT));
+
+        System.out.println("Alarm set");
+    }
+
 
     @Override
     // We come back from the create new task dialog
