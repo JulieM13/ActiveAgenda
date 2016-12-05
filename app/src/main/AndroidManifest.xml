@@ -40,6 +40,8 @@
         <activity android:name=".PlannerViewActivity" />
         <activity android:name=".MenuBarActivity" />
         <activity android:name=".TagViewActivity"></activity>
+
+        <receiver  android:process=":remote" android:name=".AlarmReciever"></receiver>
     </application>
 
 </manifest>
