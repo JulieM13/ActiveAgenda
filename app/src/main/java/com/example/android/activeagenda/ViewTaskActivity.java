@@ -49,6 +49,7 @@ public class ViewTaskActivity extends MenuBarActivity {
         String tagName = dbHelper.getTag(data.getLong("TAG_ID")).name;
         taskTagNameTV.setText(tagName);
 
+        // Share button
         Button shareTaskBtn = (Button) findViewById(R.id.view_task_share_task_btn);
         shareTaskBtn.setOnClickListener(new View.OnClickListener() {
             @Override

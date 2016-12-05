@@ -1,9 +1,14 @@
 package com.example.android.activeagenda;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +27,16 @@ public class DayViewActivity extends MenuBarActivity {
     private DBHelper dbHelper;
     private List<Task> allTasks;
     private DayViewAdapter adapter;
-    private Date curDate;
+    public Date curDate;
     private String curDateString;
     private Format formatter;
     private TextView dateTV;
+
+    // For notifications
+    NotificationManager notificationManager;
+    int notificationID = 333;
+    boolean isNotificationActive = false;
+    public static final String ACTION_1 = "action_1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +118,8 @@ public class DayViewActivity extends MenuBarActivity {
                 updateDate(nextDate);
             }
         });
+
+        showNotification(findViewById(R.id.content_day_view));
     }
 
     private void updateDate(Date day) {
@@ -115,6 +128,32 @@ public class DayViewActivity extends MenuBarActivity {
         dateTV.setText(DateFormat.getDateInstance().format(curDate));
         allTasks = dbHelper.getAllTasks(curDate);
         adapter.updateTasks(allTasks);
+    }
+
+    public void showNotification(View view) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(curDate);
+        c.add(Calendar.DATE, 1);
+        Date nextDay = c.getTime();
+        int numTasks = dbHelper.getAllTasks(nextDay).size();
+
+        NotificationCompat.Builder notificBuilder = new NotificationCompat.Builder(this)
+                .setContentTitle(numTasks + " Tasks to complete for tomorrow")
+                .setContentText("Click for more details")
+                .setTicker("Goto ActiveAgenda")
+                .setSmallIcon(R.drawable.checklist_icon)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.notification_icon));
+
+        Intent notifyIntent = new Intent(getApplicationContext(), DayViewActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(DayViewActivity.this, 0,
+                notifyIntent, Intent.FILL_IN_ACTION);
+        notificBuilder.setContentIntent(pendingIntent);
+
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationID, notificBuilder.build());
+        isNotificationActive = true;
     }
 
     @Override
