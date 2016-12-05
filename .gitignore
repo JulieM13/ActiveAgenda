@@ -1,4 +1,6 @@
 *.iml
 local.properties
 workspace.xml
+.gradle
+/build
 
