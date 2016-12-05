@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MenuBarActivity extends AppCompatActivity {
@@ -68,13 +69,22 @@ public class MenuBarActivity extends AppCompatActivity {
         List<Task> allTasks = dbHelper.getAllTasks();
         for (int i = 0; i < allTasks.size(); i++) {
             Task curTask = allTasks.get(i);
+
+            // Convert due date from String to time Calendar can use
+            String taskDueDate = curTask.dueDate;
+            int year = Integer.parseInt(taskDueDate.substring(0, 4));
+            int month = Integer.parseInt(taskDueDate.substring(5, 7)) -1;
+            int day = Integer.parseInt(taskDueDate.substring(8, 10));
+            Calendar c = Calendar.getInstance();
+            c.set(year, month, day);
+
             Intent calIntent = new Intent(Intent.ACTION_EDIT)
                     .setType("vnd.android.cursor.item/event")
                     .putExtra(CalendarContract.Events.TITLE, curTask.name)
-                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, curTask.dueDate)
-                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, curTask.dueDate)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, c.getTimeInMillis())
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, c.getTimeInMillis())
                     .putExtra(CalendarContract.Events.ALL_DAY, false)
-                    .putExtra(CalendarContract.Events.ALL_DAY, curTask.description);
+                    .putExtra(CalendarContract.Events.DESCRIPTION, curTask.description);
             startActivity(calIntent);
         }
     }
