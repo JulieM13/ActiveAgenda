@@ -131,8 +131,8 @@ public class DayViewActivity extends MenuBarActivity {
     public void showNotification(View view) {
         // TODO: change the time for the demo
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 20);
-        cal.set(Calendar.MINUTE, 35);
+        cal.set(Calendar.HOUR_OF_DAY, 10);
+        cal.set(Calendar.MINUTE, 56);
         cal.set(Calendar.SECOND, 00);
 
         Intent alertIntent = new Intent(this, AlarmReciever.class);

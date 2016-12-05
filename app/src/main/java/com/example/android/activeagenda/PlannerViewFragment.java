@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.OrientationHelper;
 import android.view.Gravity;
@@ -103,6 +104,7 @@ public class PlannerViewFragment extends Fragment {
         // Simple title
         TextView title = new TextView(curActivity);
         title.setText("Weekly View");
+        title.setTypeface(null, Typeface.BOLD);
         title.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -175,6 +177,7 @@ public class PlannerViewFragment extends Fragment {
             TextView dateTV = new TextView(curActivity);
             dateTV.setText(DateFormat.getDateInstance().format(nextDate));
             dateTV.setTextSize(25);
+            dateTV.setTypeface(null, Typeface.BOLD);
             dateTV.setOnClickListener(new View.OnClickListener() { //clicking date brings you to DayView
                 @Override
                 public void onClick(View view) {
@@ -187,8 +190,8 @@ public class PlannerViewFragment extends Fragment {
             });
             dayLayout.addView(dateTV);
             View line = new View(curActivity);
-            line.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1, 1f));
-            line.setBackgroundColor(Color.DKGRAY);
+            line.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1, 2f));
+            line.setBackgroundColor(Color.BLACK);
             dayLayout.addView(line);
 
             // Get all the tasks for this day, and add a row item for each task
@@ -272,6 +275,7 @@ public class PlannerViewFragment extends Fragment {
 
         // Make the fake ListView scrollable
         ScrollView scrollView = new ScrollView(getContext());
+        scrollView.setPadding(50, 0, 50, 0);
         scrollView.removeAllViews();;
         scrollView.addView(layout);
 
