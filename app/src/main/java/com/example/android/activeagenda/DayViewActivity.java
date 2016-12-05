@@ -41,6 +41,7 @@ public class DayViewActivity extends MenuBarActivity {
         setContentView(R.layout.activity_day_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dbHelper = new DBHelper(getApplicationContext());
 

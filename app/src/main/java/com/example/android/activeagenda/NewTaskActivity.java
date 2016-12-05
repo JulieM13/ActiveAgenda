@@ -39,6 +39,8 @@ public class NewTaskActivity extends MenuBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         formatter = new SimpleDateFormat("yyyy-MM-dd");
         Bundle extras = getIntent().getExtras();
         Date selectedDate = new Date();

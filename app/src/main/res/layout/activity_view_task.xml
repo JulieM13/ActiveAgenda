@@ -12,93 +12,99 @@
     android:layout_gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.9"
-        android:orientation="vertical">
-        <!-- Task Name-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="42dp"
-            android:text="Name"
-            android:gravity="center"
-            android:textStyle="bold"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/materialcolorpicker__black"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_task_task_name"
-            android:textSize="28dp"
-            android:gravity="center"
-            android:paddingBottom="15dp"/>
+        android:layout_weight="0.9">
 
-        <!-- Task Description-->
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="42dp"
-            android:text="Description"
-            android:gravity="center"
-            android:textStyle="bold"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/materialcolorpicker__black"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_task_task_description"
-            android:layout_below="@id/view_task_task_name"
-            android:textSize="28dp"
-            android:gravity="center"
-            android:paddingBottom="15dp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <!-- Task Due Date-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="42dp"
-            android:text="Due Date"
-            android:gravity="center"
-            android:textStyle="bold"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/materialcolorpicker__black"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_task_task_due_date"
-            android:layout_below="@id/view_task_task_description"
-            android:textSize="28dp"
-            android:gravity="center"
-            android:paddingBottom="15dp"/>
+            <!-- Task Name-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="42dp"
+                android:text="Name"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/materialcolorpicker__black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_task_task_name"
+                android:textSize="28dp"
+                android:gravity="center"
+                android:paddingBottom="15dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="42dp"
-            android:text="Tag Name"
-            android:gravity="center"
-            android:textStyle="bold"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/materialcolorpicker__black"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/view_task_task_tag_name"
-            android:layout_below="@id/view_task_task_due_date"
-            android:textSize="28dp"
-            android:gravity="center"
-            android:paddingBottom="15dp"/>
-    </LinearLayout>
+            <!-- Task Description-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="42dp"
+                android:text="Description"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/materialcolorpicker__black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_task_task_description"
+                android:layout_below="@id/view_task_task_name"
+                android:textSize="28dp"
+                android:gravity="center"
+                android:paddingBottom="15dp"/>
+
+            <!-- Task Due Date-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="42dp"
+                android:text="Due Date"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/materialcolorpicker__black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_task_task_due_date"
+                android:layout_below="@id/view_task_task_description"
+                android:textSize="28dp"
+                android:gravity="center"
+                android:paddingBottom="15dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="42dp"
+                android:text="Tag Name"
+                android:gravity="center"
+                android:textStyle="bold"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/materialcolorpicker__black"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/view_task_task_tag_name"
+                android:layout_below="@id/view_task_task_due_date"
+                android:textSize="28dp"
+                android:gravity="center"
+                android:paddingBottom="15dp"/>
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:layout_width="wrap_content"
